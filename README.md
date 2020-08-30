@@ -1,3 +1,10 @@
+## TODO
+- grid layout
+- integrate spotify, youtube, soundcloud
+- landing page
+- playlist with links (smart link)
+- routers
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts

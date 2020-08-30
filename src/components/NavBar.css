@@ -1,0 +1,11 @@
+
+.nav-bar-container {
+	background-color: transparent;
+	color: white;
+	text-align: left;
+	z-index: 1;
+	font-family: 'FugazOne';
+
+	font-size: 26px;
+	padding: 26px;
+}
