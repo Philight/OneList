@@ -1,22 +1,31 @@
 import React, { Component } from "react";
+import { withRouter } from 'react-router-dom';
 
 import './SearchBar.css';
+import IconDropdown from './IconDropdown';
 
-const SearchBar = (props) => {
-	return (
-		<div className="flex-wrapper">
-			<div className="search-bar">
-				Every favorite song 
-				<br />
-				in one place. 
-				<br />
-				<label className="subtitle">Tap below to create your own list.</label> 
-				<br />
-				<input type="text" placeholder="Type a song title" />
-			</div>
-		</div>
-	)
+class SearchBar extends Component {
+	constructor(props) {
+    	super(props);
+  	}
+
+  	submitForm (e) {
+	    e.preventDefault()
+	    this.props.history.push('/results'); // <--- The page you want to redirect your user to.
+  	}
+
+	render() {
+		return (
+			<form name="search-form" onSubmit={this.submitForm.bind(this)}>
+				<input type="submit" style={{visibility: 'hidden'}} /> 
+				<div className="onerow">
+					<input type="text" placeholder="Type a song title" /> 
+					<IconDropdown />
+				</div>
+			</form>
+		)
+	}
 
 }
 
-export default SearchBar;
+export default withRouter(SearchBar);

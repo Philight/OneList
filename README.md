@@ -1,9 +1,16 @@
 ## TODO
 - grid layout
 - integrate spotify, youtube, soundcloud
+	- how to sort results?
+	- add media source dropdown to searchbar
 - landing page
 - playlist with links (smart link)
 - routers
+
+## STACK
+- react-fontawesome
+- React Router
+- styled-components
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 

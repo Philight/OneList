@@ -1,3 +1,34 @@
+:root {
+/* darker colors */
+  --1-black:  #2b3031;
+  --1-gray: #84827E;
+  --1-green: #364951;
+  --1-green2: #1e3845;
+  --1-greendark1: #08181f;
+  --1-greendark2: #020e14;
+  --1-blue: #4c5a64;
+
+/* original colors */
+  --2-black: #444e52;
+  --2-gray: #92a2ac;  
+  --2-white: #aeb4b6;
+  --2-green: #4f6165;
+  --2-greendark1: #0d303a;
+  --2-greendark2: #01242f;
+  --2-blue: #3e6a7c;
+  --2-blue2: #53717f;
+
+/* Set website colors */
+  --primarycolor: var(--1-green);
+  --secondarycolor: var(--1-black);
+  --tertiarycolor: var(--1-gray);
+
+/* V1 1-green, 1-black */
+/* V2 1-green2, 1-greendark2 */
+/* V3 2-blue, 2-greendark2 */
+/* V4 2-blue2, 1-greendark1 */
+}
+
 @font-face {
   font-family: 'FugazOne';
   src: local('FugazOne'), url(./fonts/FugazOne-Regular.ttf) format('truetype');
@@ -14,5 +45,8 @@
 }
 
 .app {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
 }
 
