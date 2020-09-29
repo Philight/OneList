@@ -7,6 +7,10 @@ import IconDropdown from './IconDropdown';
 class SearchBar extends Component {
 	constructor(props) {
     	super(props);
+
+    	this.state = {
+    		inputValue: '', 
+    	}
   	}
 
   	submitForm (e) {
@@ -16,12 +20,16 @@ class SearchBar extends Component {
 
 	render() {
 		return (
-			<form name="search-form" onSubmit={this.submitForm.bind(this)}>
+			<form className="search-form" onSubmit={this.submitForm.bind(this)}>
+				
 				<input type="submit" style={{visibility: 'hidden'}} /> 
-				<div className="onerow">
-					<input type="text" placeholder="Type a song title" /> 
-					<IconDropdown />
-				</div>
+				<input 
+					type="text" 
+					placeholder="Type a song title" 
+					value={this.state.inputValue}
+				/> 
+					
+				<IconDropdown />
 			</form>
 		)
 	}

@@ -10,12 +10,12 @@ import { LayoutOther } from './layouts/LayoutOther';
 function App() {
 
   return (
-    <BrowserRouter>
-      <Switch>
-        <RouteWrapper exact path="/" component={LandingPage} layout={LayoutLanding} />
-        <RouteWrapper path="/results" component={ResultsPage} layout={LayoutOther} />
-      </Switch>
-    </BrowserRouter>
+      <BrowserRouter>
+        <Switch>
+          <RouteWrapper exact path="/" component={LandingPage} layout={LayoutLanding} />
+          <RouteWrapper path="/results" component={ResultsPage} layout={LayoutOther} />
+        </Switch>
+      </BrowserRouter>
   );
 }
 

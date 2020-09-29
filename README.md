@@ -2,15 +2,20 @@
 - grid layout
 - integrate spotify, youtube, soundcloud
 	- how to sort results?
+	- Track, Artist, Album, 
 	- add media source dropdown to searchbar
 - landing page
-- playlist with links (smart link)
 - routers
+- playlist with links (smart link)
+- add songs to desired music platform
+- unit tests
+
 
 ## STACK
 - react-fontawesome
 - React Router
 - styled-components
+- react-spotify-api
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 

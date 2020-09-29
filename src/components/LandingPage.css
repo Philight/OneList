@@ -43,7 +43,8 @@
 }
 
 /* position because of hidden button*/
-.moveleft {
+.moveright {
 	position: relative;
-	left: -15px;
+	right: -14px;
+	margin-top: 10px;
 }

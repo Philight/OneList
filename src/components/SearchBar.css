@@ -1,16 +1,17 @@
 
-.onerow {
+.search-form {
 /*
 	display: grid;
 	grid-template-columns: max-content max-content max-content;
     grid-gap:5px;
 */
-    display: flex;
+	height: 100%;
+	display: flex;
     flex-direction: row;
-}
+    align-items: center;
+    gap: 6px;
 
-.search-form {
-	border: 1px solid black;
+    
 }
 
 input[type=text] {
