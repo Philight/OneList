@@ -8,8 +8,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Dropdown = styled.div`
 	margin-right: 0px;
-
-
 `
 
 const DropdownList = styled.ul`
@@ -53,7 +51,6 @@ const Item = styled.li`
 
     line-height: 64px; /* fixed icon heights */
     height: 60px;
-
 `
 
 class ItemDropdown extends Component {
@@ -63,7 +60,7 @@ class ItemDropdown extends Component {
 		this.state = {
 			currentIcon: faSpotify,
 			toggleDropdownList: 'none',
-			id: "spotify"
+			id: "spotify",
 		}
 	}
 
@@ -84,37 +81,41 @@ class ItemDropdown extends Component {
 				break;	
 		}
 	}
-	
+
 	render () {
 		return (
 			<Dropdown>
-				<Item id={this.state.id} onClick={this.handleSelectIcon.bind(this)}><FontAwesomeIcon 
+				<Item id={this.state.id} onClick={this.handleSelectIcon.bind(this)}>
+					<FontAwesomeIcon 
 						icon={this.state.currentIcon} 
 						size="1x" 
 						fixedWidth
 						onClick={this.handleSelectIcon.bind(this)}
-						/>
+					/>
 				</Item>
 				<DropdownList style={{display: this.state.toggleDropdownList}}>
-					<Item id="spotify" onClick={this.handleChooseIcon.bind(this)}><FontAwesomeIcon 
-						id="spotify" 
-						icon={faSpotify} 
-						size="1x" 
-						onClick={this.handleChooseIcon.bind(this)}
+					<Item id="spotify" onClick={this.handleChooseIcon.bind(this)}>
+						<FontAwesomeIcon 
+							id="spotify" 
+							icon={faSpotify} 
+							size="1x" 
+							onClick={this.handleChooseIcon.bind(this)}
 						/>
 					</Item>
-					<Item id="soundcloud" onClick={this.handleChooseIcon.bind(this)}><FontAwesomeIcon 
-						id="soundcloud" 
-						icon={faSoundcloud} 
-						size="1x" 
-						onClick={this.handleChooseIcon.bind(this)}
+					<Item id="soundcloud" onClick={this.handleChooseIcon.bind(this)}>
+						<FontAwesomeIcon 
+							id="soundcloud" 
+							icon={faSoundcloud} 
+							size="1x" 
+							onClick={this.handleChooseIcon.bind(this)}
 						/>
 					</Item>
-					<Item id="all-cloud" onClick={this.handleChooseIcon.bind(this)}><FontAwesomeIcon 
-						id="all-cloud" 
-						icon={faCompactDisc} 
-						size="1x" 
-						onClick={this.handleChooseIcon.bind(this)}
+					<Item id="all-cloud" onClick={this.handleChooseIcon.bind(this)}>
+						<FontAwesomeIcon 
+							id="all-cloud" 
+							icon={faCompactDisc} 
+							size="1x" 
+							onClick={this.handleChooseIcon.bind(this)}
 						/>
 					</Item>
 				</DropdownList>

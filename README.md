@@ -3,6 +3,7 @@
 - integrate spotify, youtube, soundcloud
 	- how to sort results?
 	- Track, Artist, Album, 
+	- text animation for record names
 	- add media source dropdown to searchbar
 - landing page
 - routers
@@ -12,10 +13,15 @@
 
 
 ## STACK
+- React.js
 - react-fontawesome
 - React Router
 - styled-components
-- react-spotify-api
+- Spotify API
+- Context state management, hooks
+- React Refs
+
+- Express.js
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 

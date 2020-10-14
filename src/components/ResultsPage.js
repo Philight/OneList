@@ -1,98 +1,103 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import styled from 'styled-components';
-import { SpotifyApiContext, Search, Artist } from 'react-spotify-api';
 
 import ResultsRecord from './ResultsRecord';
-
-import SpotifyHooks from './SpotifyHooks';
+import { SpotifyContext } from './SpotifyContext';
 
 const ResultsContainer = styled.div`
-	width: 82% !important;
- 	margin-left: 9% !important;
- 	margin-right: 9% !important;
- 	margin-top: 80px; /* line height of NavBar */
+	width: 80% ;
+ 	margin-left: 10% ;
+ 	margin-right: 10% ;
+ 	margin-top: 10vh; /* - line height of NavBar */
  	padding-top: 1px;
 
- 	height: calc(100vh - 80px);
+ 	/* background set in parent - background class */
 
  	display: grid;
  	grid-template-columns: 1fr 1fr 1fr;
 `
 
 const ArtistColumn = styled.div`
+ 	background-color: var(--primarycolor);
+
+ 	border-color: var(--secondarycolor);
+ 	border-style: solid;
+ 	border-width: 0 1px;
+`
+
+const FlexContainer = styled.div`
 	display: flex;
  	flex-direction: column;
  	align-items: center;
-
- 	background-color: var(--primarycolor);
- 	height: calc(100vh - 80px);
+ 	/* - Navigation height */
+ 	height: calc(200vh - 20vh - 20vh);	
+ 	width: 100%;	
 `
 
 const TrackColumn = styled.div`
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-
- 	background-color: var(--secondarycolor);
- 	height: calc(100vh - 80px);
+ 	background-color: var(--primarycolor);	
 `
 
 const AlbumColumn = styled.div`
-/*
-	display: grid;
- 	grid-template-rows: 0.3fr 1fr 1fr 1fr 1fr 1fr;
-*/
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-
  	background-color: var(--primarycolor);
- 	height: calc(100vh - 80px);
+
+ 	border-color: var(--secondarycolor);
+ 	border-style: solid;
+ 	border-width: 0 1px;
 `
 
-const ColumnTitle = styled.label`
-	margin: 1%;
-	font-size: 32px;
-
+const ColumnTitle = styled.h1`
+ 	text-align: center;
+	margin: 0vh;
+	padding: 2vh;
+	font-size: 4vh;
+	font-weight: normal;
+	background-color: ;
 	color: white;
 `
 
 const ResultsPage = (props) => {
 	return (
-		<SpotifyApiContext.Provider value={props.token}>
+		<SpotifyContext.Consumer>
+		{ ({ artists, albums, tracks }) => (
 			<ResultsContainer>
 				<ArtistColumn>
 					<ColumnTitle>Artists</ColumnTitle>
-					{ [...Array(4)].map((e, i) => <ResultsRecord numbering={i} />) }
-
-					<Search query="Ed sheeran" artist>
-    					{({data, loading, error}) =>
-    						data ? (
-    							data.artists.items.map(artist => (
-  
-                        <ResultsRecord title={artist.name} image={artist.images} /> )) 
-    						) : null
-    					}
-    				</Search>
-
-    				<Artist id="7jy3rLJdDQY21OgRLCZ9sD">
-    					{(artist, loading, error) => (
-				    	    artist ? <h1>{artist.name}</h1> : <h1>empty</h1>
-				 		)}
-					</Artist>
-					<SpotifyHooks id="7jy3rLJdDQY21OgRLCZ9sD" />
-
+					<FlexContainer>
+					{/*
+						{ [...Array(10)].map((e, i) => <ResultsRecord testMode="artist" numbering={i} />) }
+						<div style={{
+							borderTop: '0.5vh solid red',
+							borderRight: '0.7vh solid red',
+							borderBottom: '2vh solid green'
+						}}>.s</div>
+					*/}
+						{ artists.map((object, i) => <ResultsRecord {...object} />) }	
+					</FlexContainer>
 				</ArtistColumn>
+
 				<TrackColumn>
 					<ColumnTitle>Tracks</ColumnTitle>
-					{ [...Array(5)].map((e, i) => <ResultsRecord numbering={i} primarycolor="1" />) }
+					<FlexContainer>
+{/*
+						<ResultsRecord testMode="track" />
+*/}
+						{ tracks.map((object, i) => <ResultsRecord {...object} />) }
+					</FlexContainer>
 				</TrackColumn>
+
 				<AlbumColumn>
 					<ColumnTitle>Albums</ColumnTitle>
-					{ [...Array(5)].map((e, i) => <ResultsRecord numbering={i} />) }
+					<FlexContainer>
+{/*
+						{ [...Array(10)].map((e, i) => <ResultsRecord testMode="album" numbering={i} />) }
+*/}
+						{ albums.map((object, i) => <ResultsRecord {...object} />) }
+					</FlexContainer>
 				</AlbumColumn>
 			</ResultsContainer>
-		</SpotifyApiContext.Provider>
+		)}
+		</SpotifyContext.Consumer>
 	)
 
 }

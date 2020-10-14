@@ -1,0 +1,29 @@
+200vh     - 30vh
+= 170
+
+95%			8.5vh
+90% elem 10% left - 	17vh 
+85% elem 15% left - 	25.5vh 
+80%			34vh
+
+10x elem
+	2x border => 
+		2x [0.1vh-0.3vh] - 2x [2px] == 0.2-0.6vh
+		10x => 2-6vh
+		
+	2x margin => 
+		2x [0.4vh-0.8vh] - 2x [6px] == 0.8-1.6vh
+		10x => 8-16vh
+
+	1x margin-bottom => 
+		[0.4vh-0.8vh] - [6px] == 0.4-0.8vh
+		10x => 4-8vh
+--------------------------------------------------------------
+1x title 
+	font-size
+		4vh ~x1.5~ 6vh
+		5vh ~x1.5~ 7.5vh
+	2x padding =>
+		2x 0.5vh = 1vh
+	  	2x 1vh = 2vh
+		2x 2vh = 4vh

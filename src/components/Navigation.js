@@ -8,10 +8,10 @@ const NavBar = styled.ul`
 	list-style-type: none;
 	padding: 0;
 	margin: 0;
-	width: 100vw;
+	width: 100%;
 
 	background-color: ${props => ((props.layout == "LayoutOther") ? 'var(--primarycolor)' : 'transparent')};
-	border-bottom: ${props => ((props.layout == "LayoutOther") ? '1px solid var(--secondarycolor)' : 'none')};
+	border-bottom: ${props => ((props.layout == "LayoutOther") ? '2px solid var(--secondarycolor)' : 'none')};
 	
 	color: white;
 
@@ -26,14 +26,14 @@ const NavElem = styled.li`
 	font-family: 'FugazOne';
 
 	margin: 0;
-	padding: 0 15px;
-	line-height: 80px;
-	height: 80px;   /* centering content vertically */
+	padding: 0 1vw;
+	line-height: 10vh;
+	height: 10vh;   /* centering content vertically */
 
 	float: left;
 	&:last-child {
     	float: right;
-    	margin-right: 20px;
+    	margin-right: ;
     }
 `
 
