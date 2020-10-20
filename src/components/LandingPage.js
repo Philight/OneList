@@ -53,7 +53,7 @@ const LandingPage = (props) => {
 			<StyleSubtitle>
 				Tap below to create your own list.
 			</StyleSubtitle> 
-			<div style={moverightStyle}> <SearchBar /> </div>
+			<div style={moverightStyle}> <SearchBar layout="LayoutLanding"/> </div>
 		</StyleLandingPage>
 	)
 }

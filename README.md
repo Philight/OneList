@@ -5,6 +5,7 @@
 	- Track, Artist, Album, 
 	- text animation for record names
 	- add media source dropdown to searchbar
+	- extend more than 10 results
 - landing page
 - routers
 - playlist with links (smart link)
@@ -17,11 +18,12 @@
 - react-fontawesome
 - React Router
 - styled-components
-- Spotify API
 - Context state management, hooks
 - React Refs
+- Spotify API
 
 - Express.js
+- Google API(Youtube Data)
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 

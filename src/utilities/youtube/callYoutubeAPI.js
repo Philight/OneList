@@ -1,19 +1,15 @@
 
-import toSearchQuery from './toSearchQuery';
 import toParsedArray from './toParsedArray';
 
-export default async function callSpotifyAPI(inputText) {
-	var searchQuery = toSearchQuery(inputText);
-	var queryObj = { query : searchQuery };
+export default async function callYoutubeAPI(inputText) {
+	var queryObj = { query : inputText };
 
 	var artistArr = [];
 	var albumArr = [];
 	var trackArr = [];
 
-	var obj = {};
-
 	// Search for artist
-	let responseArt = await fetch("/spotifyapi/searchartist", {
+	let responseArt = await fetch("/youtubeapi/searchartist", {
 		method: 'post',
 		headers: {
 	    	'Accept': 'application/json',
@@ -24,15 +20,9 @@ export default async function callSpotifyAPI(inputText) {
 	let responseArtJson = await responseArt.json();
 
 	artistArr = toParsedArray('artist', responseArtJson);
-/*
-	artistArr.forEach(item => {
-		alert("URL: " + item.url + '\n' +
-			"name: " + item.name
-		);
-	})
-	*/
+
 	// Search for album
-	let responseAlb = await fetch("/spotifyapi/searchalbum", {
+	let responseAlb = await fetch("/youtubeapi/searchalbum", {
 		method: 'post',
 		headers: {
 	    	'Accept': 'application/json',
@@ -41,11 +31,11 @@ export default async function callSpotifyAPI(inputText) {
 		body: JSON.stringify(queryObj)
 	});
 	let responseAlbJson = await responseAlb.json();
-	
+
 	albumArr = toParsedArray('album', responseAlbJson);
 
 	// Search for track
-	let responseTra = await fetch("/spotifyapi/searchtrack", {
+	let responseTra = await fetch("/youtubeapi/searchtrack", {
 		method: 'post',
 		headers: {
 	    	'Accept': 'application/json',

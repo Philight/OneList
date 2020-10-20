@@ -30,12 +30,12 @@ function App() {
     setArtists( newArray );
   };
 
-  const updateAlbum = (newObj) => {
-    setAlbums( newObj );
+  const updateAlbum = (newArray) => {
+    setAlbums( newArray );
   };
   
-  const updateTrack = (newObj) => {
-    setTracks( newObj );
+  const updateTrack = (newArray) => {
+    setTracks( newArray );
   };
 
   React.useEffect(() => {

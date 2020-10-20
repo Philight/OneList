@@ -27,7 +27,7 @@ const NavElem = styled.li`
 
 	margin: 0;
 	padding: 0 1vw;
-	line-height: 10vh;
+	line-height: 10vh; /* center text vertically */
 	height: 10vh;   /* centering content vertically */
 
 	float: left;

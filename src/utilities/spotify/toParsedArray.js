@@ -7,7 +7,7 @@ export default function toParsedArray(objType, obj) {
 			obj.artists.items.forEach(item => {
 				parsedArray.push({ 
 					url: item.external_urls.spotify, 
-					images: item.images, 
+					...((item.images && item.images.length) ? {images: item.images[0]} : {images: false}), 
 					name: item.name
 				});	
 			});
@@ -22,7 +22,7 @@ export default function toParsedArray(objType, obj) {
 
 				parsedArray.push({ 
 					url: item.external_urls.spotify, 
-					images: item.images, 
+					...((item.images && item.images.length) ? {images: item.images[0]} : {images: false}), 
 					name: item.name,
 					artists: artistsArr
 				});	
@@ -36,17 +36,17 @@ export default function toParsedArray(objType, obj) {
 					artistsArr.push( {url: artist.external_urls.spotify, name: artist.name} );
 				});
 
-				let albumArr = { 
+				let albumObj = { 
 					url: item.album.external_urls.spotify,
 					name: item.album.name
 				};
 
 				parsedArray.push({ 
 					url: item.external_urls.spotify, 
-					images: item.album.images, 
+					...((item.album.images && item.album.images.length) ? {images: item.album.images[0]} : {images: false}),
 					name: item.name,
 					artists: artistsArr,
-					album: albumArr
+					album: albumObj
 				});
 			});
 			break;

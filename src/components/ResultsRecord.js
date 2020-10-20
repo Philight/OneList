@@ -307,15 +307,19 @@ const ResultsRecord = (props) => {
 		} else {
 		// ARTISTS
 			return (
-				<Title ref={titleRef}> <Link href={url}>{name}</Link>
-					<TooltipTitle ref={tooltipTRef} parentTop={titleTop}>{name}</TooltipTitle>
-				</Title>
+				<div style={tableStyle}>
+					<div style={rowStyle}>
+						<Title ref={titleRef}> <Link href={url}>{name}</Link>
+							<TooltipTitle ref={tooltipTRef} parentTop={titleTop}>{name}</TooltipTitle>
+						</Title>
+					</div>
+				</div>
 			)
 		}
 	}
 	return (
 		<Record primarycolor={props.primarycolor}>
-			{ (images) ? <ImageSquare image={images[2].url} testMode={props.testMode} /> : <ImageSquare testMode={props.testMode} /> }
+			{ (images) ? <ImageSquare image={images.url} /> : <ImageSquare testMode missingImg /> }
 			{ renderText() }			
 		</Record>
 	)
