@@ -27,3 +27,8 @@ server/searchtrack.txt
 server/authkeys/spotifyauth.js
 server/authkeys/youtubeauth.js
 src/extra/math.txt
+server/spotifyPrint/searchalbum.txt
+server/spotifyPrint/searchartist.txt
+server/spotifyPrint/searchtrack.txt
+server/youtubePrint/searchartist.txt
+server/spotifyPrint/searchtrack.txt
