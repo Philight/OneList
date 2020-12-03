@@ -1,8 +1,11 @@
 
 import toParsedArray from './toParsedArray';
 
-export default async function callYoutubeAPI(inputText) {
-	var queryObj = { query : inputText };
+export default async function callYoutubeAPI(inputText, resultsQuota) {
+	var queryObj = { 
+		query : inputText,
+		resultsLimit: resultsQuota 
+	};
 
 	var artistArr = [];
 	var albumArr = [];
@@ -19,7 +22,7 @@ export default async function callYoutubeAPI(inputText) {
 	});
 	let responseArtJson = await responseArt.json();
 
-	artistArr = toParsedArray('artist', responseArtJson);
+	artistArr = await toParsedArray('artist', responseArtJson);
 
 	// Search for album
 	let responseAlb = await fetch("/youtubeapi/searchalbum", {
@@ -32,7 +35,7 @@ export default async function callYoutubeAPI(inputText) {
 	});
 	let responseAlbJson = await responseAlb.json();
 
-	albumArr = toParsedArray('album', responseAlbJson);
+	albumArr = await toParsedArray('album', responseAlbJson);
 
 	// Search for track
 	let responseTra = await fetch("/youtubeapi/searchtrack", {
@@ -45,7 +48,7 @@ export default async function callYoutubeAPI(inputText) {
 	});
 	let responseTraJson = await responseTra.json();
 
-	trackArr = toParsedArray('track', responseTraJson);
+	trackArr = await toParsedArray('track', responseTraJson);
 
 	return { artist: artistArr, album: albumArr, track: trackArr };
 }

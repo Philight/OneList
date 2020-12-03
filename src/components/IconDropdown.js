@@ -5,15 +5,24 @@ import { faSpotify, faSoundcloud, faYoutube } from "@fortawesome/free-brands-svg
 import { faCompactDisc } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-export const searchOp = {
+export const searchSrc = {
 	SPOTIFY: 'spotify',
 	SOUNDCLOUD: 'soundcloud',
 	YOUTUBE: 'youtube',
 	ALLCLOUDS: 'allclouds'
 }
 
+const musicClouds = [
+	{ id: searchSrc.SPOTIFY, icon: faSpotify },
+	{ id: searchSrc.YOUTUBE, icon: faYoutube },
+	{ id: searchSrc.SOUNDCLOUD, icon: faSoundcloud },
+	{ id: searchSrc.ALLCLOUDS, icon: faCompactDisc },
+]
+
 const Dropdown = styled.div`
 	position: relative;
+
+	//border: 1px red solid;
 `
 
 const DropdownList = styled.ul`
@@ -22,7 +31,7 @@ const DropdownList = styled.ul`
 	margin: 0;
 	padding: 0;
 
-	display: none;
+	display: ${props => props.display};
 	top: 0px;
 	position: absolute;
 
@@ -34,39 +43,57 @@ const DropdownList = styled.ul`
     
 const handleColor = source => {
 	switch(source) {
-		case searchOp.SPOTIFY:
-			return "color: #08FF00; background-color: #000000;";
-		case searchOp.SOUNDCLOUD:
+		case searchSrc.SPOTIFY:
+			return "color: #1DB954; background-color: #000000;";
+		case searchSrc.SOUNDCLOUD:
 			return "color: #FFFFFF; background-color: #FF3A00;";
-		case searchOp.YOUTUBE:
+		case searchSrc.YOUTUBE:
 			return "color: #FF0000; background-color: #FFFFFF;";
-		case searchOp.ALLCLOUDS:
+		case searchSrc.ALLCLOUDS:
 			return "color: #000000; background-color: #FFFFFF;";
+		default:
+			return;
 	}
 }
 
-/* Icon positioning based on layout */
+/* Icon positioning, blend based on layout */
 const handleLayout = (layout) => {
 	if (layout === 'LayoutLanding') {
-		return "line-height: 54px; height: 54px;"
+		return `line-height: 40px;
+				height: 40px; 
+				mix-blend-mode: screen;`
 	} else {
 	// LayoutOther
-		return "line-height: 60px; height: 54px;"
+		return `line-height: 45px; 
+				height: 40px; 
+				mix-blend-mode: normal;`
 	}
 }
 
-const Item = styled.li`
-	width: 100%;
+const ItemPlaceholder = styled.li`
+	width: 45px;
 
-    display:list-item;
+    display: ${props => props.show ? 'list-item' : 'list-item'};
     list-style: none;
     text-align: center;
 
-    ${props => handleColor(props.id)}
- 	${props => handleLayout(props.layout)}
+    ${props => props.show 
+    	? handleColor(props.id) 
+    	: "color: transparent; background-color: transparent; border: 4px solid transparent;"}
+ 	${props => handleLayout(props.layout)};
 
-    padding: 1px;
-    font-size: 44px;
+    padding: 0px;
+    font-size: 30px;
+    border-radius: 50%;//
+    border: 4px solid rgba(var(--silvercolor2), 1);
+
+    
+`
+
+const Item = styled(ItemPlaceholder)`
+	display: list-item;
+
+	${props => handleColor(props.id)};
 `
 
 class ItemDropdown extends Component {
@@ -76,31 +103,32 @@ class ItemDropdown extends Component {
 		this.state = {
 			currentIcon: faSpotify,
 			toggleDropdownList: 'none',
-			id: searchOp.SPOTIFY,
+			showCurrentIcon: true,
+			id: searchSrc.SPOTIFY,
 		}
 	}
 
 	handleSelectIcon(event) {
-		this.setState({ toggleDropdownList: 'list-item' });
+		this.setState({ toggleDropdownList: 'list-item', showCurrentIcon: false });
 	}
 
 	handleChooseIcon(event) {
 		switch(event.target.id) {
-			case searchOp.SPOTIFY:
-				this.setState({ currentIcon: faSpotify, id: searchOp.SPOTIFY, toggleDropdownList: 'none' });
-				this.props.passOption(searchOp.SPOTIFY);
+			case searchSrc.SPOTIFY:
+				this.setState({ currentIcon: faSpotify, id: searchSrc.SPOTIFY, toggleDropdownList: 'none', showCurrentIcon: true });
+				this.props.passSource(searchSrc.SPOTIFY);
 				break;
-			case searchOp.SOUNDCLOUD:
-				this.setState({ currentIcon: faSoundcloud, id: searchOp.SOUNDCLOUD, toggleDropdownList: 'none' });
-				this.props.passOption(searchOp.SOUNDCLOUD);
+			case searchSrc.SOUNDCLOUD:
+				this.setState({ currentIcon: faSoundcloud, id: searchSrc.SOUNDCLOUD, toggleDropdownList: 'none', showCurrentIcon: true });
+				this.props.passSource(searchSrc.SOUNDCLOUD);
 				break;
-			case searchOp.YOUTUBE:
-				this.setState({ currentIcon: faYoutube, id: searchOp.YOUTUBE, toggleDropdownList: 'none' });
-				this.props.passOption(searchOp.YOUTUBE);
+			case searchSrc.YOUTUBE:
+				this.setState({ currentIcon: faYoutube, id: searchSrc.YOUTUBE, toggleDropdownList: 'none', showCurrentIcon: true });
+				this.props.passSource(searchSrc.YOUTUBE);
 				break;
-			case searchOp.ALLCLOUDS:
-				this.setState({ currentIcon: faCompactDisc, id: searchOp.ALLCLOUDS, toggleDropdownList: 'none' });
-				this.props.passOption(searchOp.ALLCLOUDS);
+			case searchSrc.ALLCLOUDS:
+				this.setState({ currentIcon: faCompactDisc, id: searchSrc.ALLCLOUDS, toggleDropdownList: 'none', showCurrentIcon: true });
+				this.props.passSource(searchSrc.ALLCLOUDS);
 				break;	
 		}
 	}
@@ -108,47 +136,30 @@ class ItemDropdown extends Component {
 	render () {
 		return (
 			<Dropdown>
-				<Item id={this.state.id} onClick={this.handleSelectIcon.bind(this)} layout={this.props.layout}>
+				<ItemPlaceholder 
+					id={this.state.id} 
+					onClick={this.handleSelectIcon.bind(this)} 
+					layout={this.props.layout}
+					show={this.state.showCurrentIcon}
+				>
 					<FontAwesomeIcon 
+						id={this.state.id} 
 						icon={this.state.currentIcon} 
-						size="1x" 
 						fixedWidth
 						onClick={this.handleSelectIcon.bind(this)}
 					/>
-				</Item>
-				<DropdownList style={{display: this.state.toggleDropdownList}}>
-					<Item id={searchOp.SPOTIFY} onClick={this.handleChooseIcon.bind(this)} layout={this.props.layout}>
-						<FontAwesomeIcon 
-							id={searchOp.SPOTIFY} 
-							icon={faSpotify} 
-							size="1x" 
-							onClick={this.handleChooseIcon.bind(this)}
-						/>
-					</Item>
-					<Item id={searchOp.SOUNDCLOUD} onClick={this.handleChooseIcon.bind(this)} layout={this.props.layout}>
-						<FontAwesomeIcon 
-							id={searchOp.SOUNDCLOUD} 
-							icon={faSoundcloud} 
-							size="1x" 
-							onClick={this.handleChooseIcon.bind(this)}
-						/>
-					</Item>	
-					<Item id={searchOp.YOUTUBE} onClick={this.handleChooseIcon.bind(this)} layout={this.props.layout}>
-						<FontAwesomeIcon 
-							id={searchOp.YOUTUBE} 
-							icon={faYoutube} 
-							size="1x" 
-							onClick={this.handleChooseIcon.bind(this)}
-						/>
-					</Item>
-					<Item id={searchOp.ALLCLOUDS} onClick={this.handleChooseIcon.bind(this)} layout={this.props.layout}>
-						<FontAwesomeIcon 
-							id={searchOp.ALLCLOUDS} 
-							icon={faCompactDisc} 
-							size="1x" 
-							onClick={this.handleChooseIcon.bind(this)}
-						/>
-					</Item>
+				</ItemPlaceholder>
+				
+				<DropdownList display={this.state.toggleDropdownList}>
+					{ musicClouds.map(cloud => 
+						<Item id={cloud.id} onClick={this.handleChooseIcon.bind(this)} layout={this.props.layout}>
+							<FontAwesomeIcon 
+								id={cloud.id}
+								icon={cloud.icon}
+								onClick={this.handleChooseIcon.bind(this)}
+							/>
+						</Item>
+					) }			
 				</DropdownList>
 			</Dropdown>
 		)

@@ -3,9 +3,9 @@ import callYoutubeAPI from './../youtube/callYoutubeAPI';
 
 import combineResults from './combineResults';
 
-export default async function callAllAPI(inputText) {
-	let spotifyResults = callSpotifyAPI(inputText);
-	let youtubeResults = callYoutubeAPI(inputText);
+export default async function callAllAPI(inputText, resultsQuota) {
+	let spotifyResults = callSpotifyAPI(inputText, resultsQuota);
+	let youtubeResults = callYoutubeAPI(inputText, resultsQuota);
 
-	return (combineResults(await spotifyResults, await youtubeResults));
+	return (combineResults(resultsQuota, await spotifyResults, await youtubeResults));
 }

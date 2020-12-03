@@ -38,7 +38,7 @@ const StyleSubtitle = styled(StyleTextTemplate)`
 /* position because of hidden button*/
 const moverightStyle = {
 	position: 'relative',
-	right: '-14px',
+	right: '-12px',
 	marginTop: '10px',	
 }
 
@@ -46,12 +46,12 @@ const LandingPage = (props) => {
 	return (
 		<StyleLandingPage>
 			<StyleTitle>
-				Every favourite song 
+				All your favourite songs 
 				<br />
 				in one place
 			</StyleTitle>
 			<StyleSubtitle>
-				Tap below to create your own list.
+				Tap below to create your own playlist.
 			</StyleSubtitle> 
 			<div style={moverightStyle}> <SearchBar layout="LayoutLanding"/> </div>
 		</StyleLandingPage>

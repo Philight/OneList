@@ -6,7 +6,8 @@ router.use(bodyParser.json());
 const fs = require('fs');
 
 const {google} = require('googleapis');
-const YT_API_KEY = 'AIzaSyC-7hRKLwK0p72SEPB3GnaRx4UQf6tKP4U';
+
+const { YT_API_KEY } = require('./../authkeys/youtubeauth');
 
 router
 /*
@@ -23,10 +24,10 @@ router
 				key: YT_API_KEY,
 				q: req.body.query,
 				type: 'channel',
-				maxResults: 10
+				maxResults: req.body.resultsLimit,
 			});
 
-			fs.writeFile('./youtube/searchartist.txt', JSON.stringify(apiRes.data), function(err) {
+			fs.writeFile('./youtubePrint/searchartist.txt', JSON.stringify(apiRes.data), function(err) {
 				if(err) console.log(err)
 			})
 
@@ -38,12 +39,15 @@ router
 		}
 	})
 
-function concatResults(firstObj, secondObj) {
+function concatResults(firstObj, secondObj, thirdObj) {
 	let mergedItems = [];
-	for (i = 0; i < firstObj.items.length; i++) {
+	for (i = 0; i < thirdObj.items.length; i++) {
 		mergedItems.push(firstObj.items[i]);
 		mergedItems.push(secondObj.items[i]);
+		mergedItems.push(thirdObj.items[i]);
 	}
+
+	mergedItems = mergedItems.filter(function (e) {return e != null;});
 
 	const mergedObj = {
 		"firstDetails": {
@@ -59,6 +63,13 @@ function concatResults(firstObj, secondObj) {
 		"nextPageToken": secondObj.nextPageToken,
 		"regionCode": secondObj.regionCode,
 		"pageInfo": secondObj.pageInfo,      
+	}, 
+		"thirdDetails": {
+		"kind": thirdObj.kind,
+		"etag": thirdObj.etag,
+		"nextPageToken": thirdObj.nextPageToken,
+		"regionCode": thirdObj.regionCode,
+		"pageInfo": thirdObj.pageInfo,      
 	}, 
 		"items": mergedItems,
 	};
@@ -76,12 +87,22 @@ router
 				version: 'v3',
 			});
 
-			const apiResVid = await youtube.search.list({
+			const apiResVid1 = await youtube.search.list({
 				part: 'id, snippet',
 				key: YT_API_KEY,
 				q: req.body.query,
 				type: 'video',
-				maxResults: 5,
+				videoDuration: 'long',
+				maxResults: Math.round(req.body.resultsLimit / 4),
+			});
+
+			const apiResVid2 = await youtube.search.list({
+				part: 'id, snippet',
+				key: YT_API_KEY,
+				q: req.body.query,
+				type: 'video',
+				videoDuration: 'medium',
+				maxResults: Math.round(req.body.resultsLimit / 4),
 			});
 
 			const apiResList = await youtube.search.list({
@@ -89,15 +110,15 @@ router
 				key: YT_API_KEY,
 				q: req.body.query,
 				type: 'playlist',
-				maxResults: 5,
+				maxResults: (req.body.resultsLimit / 2),
 			});
 
-			const mergedRes = concatResults(apiResVid.data, apiResList.data);
+			const mergedRes = concatResults(apiResVid1.data, apiResVid2.data, apiResList.data);
 
-			fs.writeFile('./youtube/searchalbum.txt', JSON.stringify(apiResVid.data), function(err) {
+			fs.writeFile('./../youtubePrint/searchalbum.txt', JSON.stringify(apiResVid1.data), function(err) {
 				if(err) console.log(err)
 			})
-			fs.writeFile('./youtube/searchalbumPlaylist.txt', JSON.stringify(apiResList.data), function(err) {
+			fs.writeFile('./../youtubePrint/searchalbumPlaylist.txt', JSON.stringify(apiResList.data), function(err) {
 				if(err) console.log(err)
 			})
 
@@ -123,10 +144,10 @@ router
 				key: YT_API_KEY,
 				q: req.body.query,
 				type: 'video',
-				maxResults: 10
+				maxResults: req.body.resultsLimit,
 			});
 
-			fs.writeFile('./youtube/searchtrack.txt', JSON.stringify(apiRes.data), function(err) {
+			fs.writeFile('./../youtubePrint/searchtrack.txt', JSON.stringify(apiRes.data), function(err) {
 				if(err) console.log(err)
 			})
 

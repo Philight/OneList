@@ -1,23 +1,43 @@
-import React, { Component } from "react";
+import React from "react";
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 import SearchBar from './SearchBar';
+
+const layoutTheme = (layout) => {
+	switch(layout) {
+		case "LayoutLanding":
+			return `
+				background-color: transparent;
+				border-bottom: none;
+			`
+		case "LayoutOther":
+			return `
+				background-color: rgb(var(--primarycolor));
+				border-bottom: 2px solid rgb(var(--secondarycolor));
+			`
+		case "LayoutPlaylist":
+			return `
+				background-color: transparent;
+			`
+	}
+}
+
 
 const NavBar = styled.ul`
 	list-style-type: none;
 	padding: 0;
 	margin: 0;
 	width: 100%;
+	border-radius: 2px;
 
-	background-color: ${props => ((props.layout == "LayoutOther") ? 'var(--primarycolor)' : 'transparent')};
-	border-bottom: ${props => ((props.layout == "LayoutOther") ? '2px solid var(--secondarycolor)' : 'none')};
-	
+	${props => (layoutTheme(props.layout))};
+
 	color: white;
 
 	position: fixed;
-	top: 0;
-	z-index: 1;
+	top: 0px;
+	z-index: 2;
 `
 
 const NavElem = styled.li`
@@ -27,6 +47,8 @@ const NavElem = styled.li`
 
 	margin: 0;
 	padding: 0 1vw;
+	margin-left: ;
+
 	line-height: 10vh; /* center text vertically */
 	height: 10vh;   /* centering content vertically */
 
@@ -45,13 +67,23 @@ const linkStyling = {
 };
 
 const Navigation = (props) => {
-	return (
-		<NavBar layout={props.layout}>
-			<NavElem><Link to="/" style={linkStyling}>OneList</Link></NavElem>
-			<NavElem><Link to="/results" style={linkStyling}>Results</Link></NavElem>
-			<NavElem>{(props.layout == "LayoutOther") && <SearchBar />}</NavElem>
-		</NavBar>
-	)
+
+	switch(props.layout) {
+		case "LayoutLanding":
+		case "LayoutOther":
+			return (
+				<NavBar layout={props.layout}>
+					<NavElem><Link to="/" style={linkStyling}>OneList</Link></NavElem>
+					<NavElem>{(props.layout === "LayoutOther") && <SearchBar />}</NavElem>
+				</NavBar>
+			);
+		case "LayoutPlaylist":
+			return (
+				<NavBar layout={props.layout}>
+					<NavElem>{<Link to="/" style={linkStyling}>+ New List</Link>}</NavElem>
+				</NavBar>
+			);
+	};
 }
 
 export default Navigation;

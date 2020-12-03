@@ -2,9 +2,12 @@
 import toSearchQuery from './toSearchQuery';
 import toParsedArray from './toParsedArray';
 
-export default async function callSpotifyAPI(inputText) {
+export default async function callSpotifyAPI(inputText, resultsQuota) {
 	var searchQuery = toSearchQuery(inputText);
-	var queryObj = { query : searchQuery };
+	var queryObj = { 
+		query : searchQuery,
+		resultsLimit: resultsQuota 
+	};
 
 	var artistArr = [];
 	var albumArr = [];
@@ -21,7 +24,7 @@ export default async function callSpotifyAPI(inputText) {
 	});
 	let responseArtJson = await responseArt.json();
 
-	artistArr = toParsedArray('artist', responseArtJson);
+	artistArr = toParsedArray('artist', await responseArtJson);
 /*
 	artistArr.forEach(item => {
 		alert("URL: " + item.url + '\n' +

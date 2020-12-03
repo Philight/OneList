@@ -1,9 +1,10 @@
+
 import React, { Component } from "react";
 import { withRouter } from 'react-router-dom';
 
 import './SearchBar.css';
 import IconDropdown from './IconDropdown';
-import { searchOp } from './IconDropdown';
+import { searchSrc } from './IconDropdown';
 
 import callSpotifyAPI from './../utilities/spotify/callSpotifyAPI';
 import callYoutubeAPI from './../utilities/youtube/callYoutubeAPI';
@@ -17,7 +18,8 @@ class SearchBar extends Component {
 
     	this.state = {
     		inputValue: '',
-    		searchOption: searchOp.SPOTIFY, 
+    		searchSource: searchSrc.SPOTIFY,
+    		resultsQuota: 10,	// number of results 
     		testObj: { }
     	}
     	this.submitForm = this.submitForm.bind(this);
@@ -27,43 +29,45 @@ class SearchBar extends Component {
   		this.setState({ inputValue: event.target.value });
   	}
 
-  	handleSearchOption(newOption) {
-  		this.setState({ searchOption: newOption });
-  		alert("new option: "+newOption);
+  	handleSearchSource(newOption) {
+  		this.setState({ searchSource: newOption });
   	}
 
-  	submitForm (e, updateArtist, updateAlbum, updateTrack) {
+  	submitForm (e, updateArtist, updateAlbum, updateTrack, updateReadyState) {
 	    e.preventDefault()
- 		
- 		switch(this.state.searchOption) {
- 			case searchOp.SPOTIFY:
-				alert("Calling SpotifyAPI...");
-				callSpotifyAPI(this.state.inputValue)
-					.then((searchObj) => {
-						alert(searchObj.artist);
-						updateArtist(searchObj.artist);
-						updateAlbum(searchObj.album);
-						updateTrack(searchObj.track);
-					})
- 				break;
+ 		updateReadyState(false);
+ 		switch(this.state.searchSource) {
 
- 			case searchOp.YOUTUBE:
- 				alert("Calling YoutubeAPI...");
-				callYoutubeAPI(this.state.inputValue)
+ 			case searchSrc.SPOTIFY:
+				//alert("Calling SpotifyAPI...");
+				callSpotifyAPI(this.state.inputValue, this.state.resultsQuota)
 					.then((searchObj) => {
 						updateArtist(searchObj.artist);
 						updateAlbum(searchObj.album);
 						updateTrack(searchObj.track);
+						updateReadyState(true);
 					})
  				break;
 
- 			case searchOp.ALLCLOUDS:
-				alert("Calling All APIs...");
- 				callAllAPI(this.state.inputValue)
+ 			case searchSrc.YOUTUBE:
+ 				//alert("Calling YoutubeAPI...");
+				callYoutubeAPI(this.state.inputValue, this.state.resultsQuota)
+					.then((searchObj) => {
+						updateArtist(searchObj.artist);
+						updateAlbum(searchObj.album);
+						updateTrack(searchObj.track);
+						updateReadyState(true);
+					})
+ 				break;
+
+ 			case searchSrc.ALLCLOUDS:
+				//alert("Calling All APIs...");
+ 				callAllAPI(this.state.inputValue, this.state.resultsQuota)
  					.then((searchObj) => {
  						updateArtist(searchObj.artist);
 						updateAlbum(searchObj.album);
 						updateTrack(searchObj.track);
+						updateReadyState(true);
  					})
  				break;
  		}
@@ -75,9 +79,8 @@ class SearchBar extends Component {
 	render() {
 		return (
 			<SpotifyContext.Consumer>
-				{ ({updateArtist, updateAlbum, updateTrack}) => (
-					<div>
-	        		<form className="search-form" onSubmit={event => this.submitForm(event, updateArtist, updateAlbum, updateTrack)}>
+				{ ({updateArtist, updateAlbum, updateTrack, updateReadyState }) => (	
+	        		<form className="search-form" onSubmit={event => this.submitForm(event, updateArtist, updateAlbum, updateTrack, updateReadyState)}>
 						<input type="submit" style={{visibility: 'hidden'}} /> 
 						<input 
 							type="text" 
@@ -87,22 +90,10 @@ class SearchBar extends Component {
 						/> 
 							
 						<IconDropdown
-							passOption={this.handleSearchOption.bind(this)}
+							passSource={this.handleSearchSource.bind(this)}
 							layout={this.props.layout}
 						/>
-						
 					</form>
-{/*
-						<a
-				            href={`data:text/json;charset=utf-8,${encodeURIComponent(
-				              JSON.stringify(this.state.testObj)
-				            )}`}
-				            download="testobject.json"
-				          >
-				            {`Download Json`}
-				        </a>
-*/}
-				    </div>
       			)}
 			</SpotifyContext.Consumer>
 		)

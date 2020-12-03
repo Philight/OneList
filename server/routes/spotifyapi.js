@@ -6,8 +6,9 @@ const bodyParser = require('body-parser');
 router.use(bodyParser.json());
 const fs = require('fs');
 
-const CLIENT_ID = "8a92dfb00bbf41d4a20581983e7627a6";
-const CLIENT_SECRET = "d5c71c52b3d94123a611c14528b7bc7d";
+var spotifyauth = require('./../authkeys/spotifyauth');
+const CLIENT_ID = spotifyauth.CLIENT_ID;
+const CLIENT_SECRET = spotifyauth.CLIENT_SECRET;
 
 var spotifyAccessToken = "";
 
@@ -15,26 +16,26 @@ var spotifyAccessToken = "";
     Request - Spotify API - Authorization 
 */
 
-	function newToken() {
-		var authOptions = {
-			url: 'https://accounts.spotify.com/api/token',
-			headers: {
-			  'Authorization': 'Basic ' + (Buffer.from(CLIENT_ID + ':' + CLIENT_SECRET).toString('base64'))
-			},
-			form: {
-			  grant_type: 'client_credentials'
-			},
-			json: true
-		};
-
-		request.post(authOptions, function(error, response, body) {
-			console.log("request");
-			if (!error && response.statusCode === 200) {
-				spotifyAccessToken = body.access_token;
-				console.log("TOKEN: "+spotifyAccessToken);
-			}
-		});
+function newToken() {
+	var authOptions = {
+		url: 'https://accounts.spotify.com/api/token',
+		headers: {
+		  'Authorization': 'Basic ' + (Buffer.from(CLIENT_ID + ':' + CLIENT_SECRET).toString('base64'))
+		},
+		form: {
+		  grant_type: 'client_credentials'
+		},
+		json: true
 	};
+
+	request.post(authOptions, function(error, response, body) {
+		console.log("request");
+		if (!error && response.statusCode === 200) {
+			spotifyAccessToken = body.access_token;
+			console.log("TOKEN: "+spotifyAccessToken);
+		}
+	});
+};
 
 
 router
@@ -53,10 +54,10 @@ router
 /* 
     POST listener - Spotify API - search for artist 
 */
-	.post('/searchartist', function (req, res) {
+	.post('/searchartist', async function (req, res) {
 		console.log("artist q:"+req.body.query);
 		var options = {
-			url: 'https://api.spotify.com/v1/search?q=artist:'+req.body.query+'&limit=10&type=artist',
+			url: 'https://api.spotify.com/v1/search?q=artist:'+req.body.query+'&limit='+req.body.resultsLimit+'&type=artist',
 			headers: {
 			  'Authorization': 'Bearer ' + spotifyAccessToken
 			},
@@ -68,7 +69,7 @@ router
 			console.log("artist res: "+response);
 			console.log("artist body: "+body);
 
-			fs.writeFile('./spotify/searchartist.txt', JSON.stringify(body), function(err) {
+			fs.writeFile('./spotifyPrint/searchartist.txt', JSON.stringify(body), function(err) {
 			  if(err) console.log(err)
 			})
 
@@ -79,10 +80,10 @@ router
 /* 
     POST listener - Spotify API - search for album 
 */
-	.post('/searchalbum', function (req, res) {
+	.post('/searchalbum', async function (req, res) {
 		console.log("album q:"+req.body.query);
 		var options = {
-			url: 'https://api.spotify.com/v1/search?q=album:'+req.body.query+'&limit=10&type=album',
+			url: 'https://api.spotify.com/v1/search?q=album:'+req.body.query+'&limit='+req.body.resultsLimit+'&type=album',
 			headers: {
 			  'Authorization': 'Bearer ' + spotifyAccessToken
 			},
@@ -94,7 +95,7 @@ router
 			console.log("album res: "+response);
 			console.log("album body: "+body);
 
-			fs.writeFile('./spotify/searchalbum.txt', JSON.stringify(body), function(err) {
+			fs.writeFile('./spotifyPrint/searchalbum.txt', JSON.stringify(body), function(err) {
 			  if(err) console.log(err)
 			})
 
@@ -105,10 +106,10 @@ router
 /* 
     POST listener - Spotify API - search for track 
 */
-	.post('/searchtrack', function (req, res) {
+	.post('/searchtrack', async function (req, res) {
 		console.log("track q:"+req.body.query);
 		var options = {
-			url: 'https://api.spotify.com/v1/search?q=track:'+req.body.query+'&limit=10&type=track',
+			url: 'https://api.spotify.com/v1/search?q=track:'+req.body.query+'&limit='+req.body.resultsLimit+'&type=track',
 			headers: {
 			  'Authorization': 'Bearer ' + spotifyAccessToken
 			},
@@ -120,7 +121,7 @@ router
 			console.log("track res: "+response);
 			console.log("track body: "+body);
 
-			fs.writeFile('./spotify/searchtrack.txt', JSON.stringify(body), function(err) {
+			fs.writeFile('./spotifyPrint/searchtrack.txt', JSON.stringify(body), function(err) {
 			  if(err) console.log(err)
 			})
 

@@ -24,7 +24,7 @@ const StyleBackgroundLanding = styled.div`
 const LayoutLanding = ({children}) => (
 	<div>
 		<StyleBackgroundLanding />
-    	<Navigation />
+    	<Navigation layout="LayoutLanding"/>
     	{children}
     </div>
 )

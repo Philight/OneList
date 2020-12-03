@@ -1,9 +1,9 @@
 :root {
 /* darker colors */
-  --1-black:  #2b3031;
+  --1-black:  43, 48, 49;
   --1-gray: #84827E;
-  --1-green: #364951;
-  --1-green2: #1e3845;
+  --1-green: 54, 73, 81;
+  --1-green2: #1e3845; /* 4th color?*/
   --1-greendark1: #08181f;
   --1-greendark2: #020e14;
   --1-blue: #4c5a64;
@@ -15,13 +15,21 @@
   --2-green: #4f6165;
   --2-greendark1: #0d303a;
   --2-greendark2: #01242f;
-  --2-blue: #3e6a7c;
+  --2-blue: 46, 112, 138;
+  --2-blueBright:  28, 120, 156;
+  --2-blueBright2: 34, 150, 195;
+  --2-blueBright3: 38, 166, 217;
   --2-blue2: #53717f;
+  --white: 255, 255, 255;
+
+  --silvercolor: 192, 192, 192;
+  --silvercolor2: 166, 166, 166;
 
 /* Set website colors */
   --primarycolor: var(--1-green);
   --secondarycolor: var(--1-black);
-  --tertiarycolor: var(--1-gray);
+  --tertiarycolor:  var(--2-blueBright2);  /* 2-gray, 2-blue, 2-blue2  */
+
 
 /* V1 1-green, 1-black */
 /* V2 1-green2, 1-greendark2 */

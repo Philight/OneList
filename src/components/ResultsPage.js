@@ -1,49 +1,52 @@
-import React, { Component, useState } from "react";
+import React from "react";
 import styled from 'styled-components';
 
-import ResultsRecord from './ResultsRecord';
+import SquareRecord from './SquareRecord';
+import RectangleRecord from './RectangleRecord';
+
 import { SpotifyContext } from './SpotifyContext';
+import { TestData } from './../test/TestData';
 
 const ResultsContainer = styled.div`
-	width: 80% ;
- 	margin-left: 10% ;
- 	margin-right: 10% ;
+	width: 70% ;
+ 	margin-left: ${props => props.sidebarShown ? '30%' : '15%'} ;
+ 	margin-right: ${props => props.sidebarShown ? '0' : '15%'} ;
+ 	transition: 0.2s margin;
+
  	margin-top: 10vh; /* - line height of NavBar */
  	padding-top: 1px;
 
- 	/* background set in parent - background class */
+ 	//background-color: var(--primarycolor);
+	background: rgba(0,0,0,0.5);
 
  	display: grid;
- 	grid-template-columns: 1fr 1fr 1fr;
+ 	grid-template-columns: 0.5fr minmax(0, 1fr) 0.5fr;
+
 `
 
 const ArtistColumn = styled.div`
- 	background-color: var(--primarycolor);
-
- 	border-color: var(--secondarycolor);
- 	border-style: solid;
- 	border-width: 0 1px;
+ 	//border: rgb(var(--secondarycolor)) solid;
+ 	//border-width: 0 1px;
+ 	border-left: rgb(var(--secondarycolor)) solid 1px;
 `
 
 const FlexContainer = styled.div`
 	display: flex;
  	flex-direction: column;
  	align-items: center;
- 	/* - Navigation height */
- 	height: calc(200vh - 20vh - 20vh);	
+
+ 		/* - Navigation height */
+ 	//height: calc(200vh - 20vh - 20vh);	
  	width: 100%;	
 `
 
 const TrackColumn = styled.div`
- 	background-color: var(--primarycolor);	
 `
 
 const AlbumColumn = styled.div`
- 	background-color: var(--primarycolor);
-
- 	border-color: var(--secondarycolor);
- 	border-style: solid;
- 	border-width: 0 1px;
+ 	//border: rgb(var(--secondarycolor)) solid;
+ 	//border-width: 0 1px;
+ 	border-right: rgb(var(--secondarycolor)) solid 1px;
 `
 
 const ColumnTitle = styled.h1`
@@ -60,39 +63,34 @@ const ResultsPage = (props) => {
 	return (
 		<SpotifyContext.Consumer>
 		{ ({ artists, albums, tracks }) => (
-			<ResultsContainer>
+			<ResultsContainer sidebarShown={props.sidebarShown} >
 				<ArtistColumn>
 					<ColumnTitle>Artists</ColumnTitle>
 					<FlexContainer>
-					{/*
-						{ [...Array(10)].map((e, i) => <ResultsRecord testMode="artist" numbering={i} />) }
-						<div style={{
-							borderTop: '0.5vh solid red',
-							borderRight: '0.7vh solid red',
-							borderBottom: '2vh solid green'
-						}}>.s</div>
-					*/}
-						{ artists.map((object, i) => <ResultsRecord {...object} />) }	
+					
+						{/* TestData.artists.map((artist, i) => <SquareRecord {...artist} /> ) */}
+			
+						{ artists.map((object, i) => <SquareRecord {...object} />) }	
 					</FlexContainer>
 				</ArtistColumn>
 
 				<TrackColumn>
 					<ColumnTitle>Tracks</ColumnTitle>
 					<FlexContainer>
-{/*
-						<ResultsRecord testMode="track" />
-*/}
-						{ tracks.map((object, i) => <ResultsRecord {...object} />) }
+
+						{/* TestData.tracks.map((track, i) => <RectangleRecord {...track} /> ) */}
+
+						{ tracks.map((object, i) => <RectangleRecord {...object} />) }
 					</FlexContainer>
 				</TrackColumn>
 
 				<AlbumColumn>
 					<ColumnTitle>Albums</ColumnTitle>
 					<FlexContainer>
-{/*
-						{ [...Array(10)].map((e, i) => <ResultsRecord testMode="album" numbering={i} />) }
-*/}
-						{ albums.map((object, i) => <ResultsRecord {...object} />) }
+
+						{/* TestData.albums.map((album, i) => <SquareRecord {...album} /> ) */}
+						
+						{ albums.map((object, i) => <SquareRecord {...object} />) }
 					</FlexContainer>
 				</AlbumColumn>
 			</ResultsContainer>

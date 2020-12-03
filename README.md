@@ -1,17 +1,3 @@
-## TODO
-- grid layout
-- integrate spotify, youtube, soundcloud
-	- how to sort results?
-	- Track, Artist, Album, 
-	- text animation for record names
-	- add media source dropdown to searchbar
-	- extend more than 10 results
-- landing page
-- routers
-- playlist with links (smart link)
-- add songs to desired music platform
-- unit tests
-
 
 ## STACK
 - React.js
@@ -20,9 +6,10 @@
 - styled-components
 - Context state management, hooks
 - React Refs
-- Spotify API
+- react-beautiful-dnd
 
 - Express.js
+- Spotify API
 - Google API(Youtube Data)
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

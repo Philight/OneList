@@ -1,10 +1,10 @@
 
-export default function combineResults(obj1, obj2) {
+export default function combineResults(resultsQuota, obj1, obj2) {
 	let artistArr = [];
 	let albumArr = [];
 	let trackArr = [];
 
-	for (let i = 0; i < 10; i++) {
+	for (let i = 0; i < resultsQuota; i++) {
 		if (typeof obj1.artist[i] != 'undefined') { artistArr.push(obj1.artist[i]) };
 		if (obj2.artist[i]) { artistArr.push(obj2.artist[i]) };
 

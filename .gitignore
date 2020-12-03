@@ -24,3 +24,6 @@ yarn-error.log*
 server/searchalbum.txt
 server/searchartist.txt
 server/searchtrack.txt
+server/authkeys/spotifyauth.js
+server/authkeys/youtubeauth.js
+src/extra/math.txt
