@@ -1,0 +1,21 @@
+{
+  "files": {
+    "main.css": "/one-list/static/css/main.96e3af69.css",
+    "main.js": "/one-list/static/js/main.3103b46c.js",
+    "static/media/landingpage.jpg": "/one-list/static/media/landingpage.bcb5e9253a4ac516a25d.jpg",
+    "static/media/Alegreya-ExtraBoldItalic.ttf": "/one-list/static/media/Alegreya-ExtraBoldItalic.f803b7dcdf1059c643e6.ttf",
+    "static/media/Alegreya-ExtraBold.ttf": "/one-list/static/media/Alegreya-ExtraBold.990686989d93fe9aed31.ttf",
+    "static/media/unicorn.jpg": "/one-list/static/media/unicorn.c47a221ff621e29100ed.jpg",
+    "static/media/spotifysquare.jpg": "/one-list/static/media/spotifysquare.f2531ec6ad8773c42338.jpg",
+    "static/media/FugazOne-Regular.ttf": "/one-list/static/media/FugazOne-Regular.bb916c7e293e03d98ac8.ttf",
+    "static/media/pulseloading.svg": "/one-list/static/media/pulseloading.50785e4c17487ba1329757487caa8eba.svg",
+    "static/media/barsloading.svg": "/one-list/static/media/barsloading.98872a0d316985d802be0fb2a977b513.svg",
+    "index.html": "/one-list/index.html",
+    "main.96e3af69.css.map": "/one-list/static/css/main.96e3af69.css.map",
+    "main.3103b46c.js.map": "/one-list/static/js/main.3103b46c.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.96e3af69.css",
+    "static/js/main.3103b46c.js"
+  ]
+}
