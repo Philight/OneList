@@ -1,10 +1,10 @@
 import React from "react";
 import styled from 'styled-components';
 
-import SquareRecord from './SquareRecord';
-import RectangleRecord from './RectangleRecord';
+import SquareRecord from '../components/SquareRecord';
+import RectangleRecord from '../components/RectangleRecord';
 
-import { SpotifyContext } from './SpotifyContext';
+import { SpotifyContext } from '../contexts/SpotifyContext';
 import { TestData } from './../test/TestData';
 
 const ResultsContainer = styled.div`

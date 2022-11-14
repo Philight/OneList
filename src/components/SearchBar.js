@@ -10,7 +10,7 @@ import callSpotifyAPI from './../utilities/spotify/callSpotifyAPI';
 import callYoutubeAPI from './../utilities/youtube/callYoutubeAPI';
 import callAllAPI from './../utilities/allclouds/callAllAPI';
 
-import { SpotifyContext } from './SpotifyContext';
+import { SpotifyContext } from '../contexts/SpotifyContext';
 
 class SearchBar extends Component {
 	constructor(props) {

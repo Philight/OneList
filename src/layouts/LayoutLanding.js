@@ -1,9 +1,9 @@
 import React from "react";
 import styled from 'styled-components';
 
-import Navigation from './../components/Navigation';
+import Navigation from './../main/Navigation';
 
-const backgroundUrl = require("./../images/landingpage.jpg");
+const backgroundUrl = require("../assets/images/landingpage.jpg");
 
 const StyleBackgroundLanding = styled.div`
 	width: 100%;

@@ -1,4 +1,5 @@
 
+import { VARIABLES } from '../../data/ENV.js';
 import toSearchQuery from './toSearchQuery';
 import toParsedArray from './toParsedArray';
 
@@ -14,7 +15,7 @@ export default async function callSpotifyAPI(inputText, resultsQuota) {
 	var trackArr = [];
 
 	// Search for artist
-	let responseArt = await fetch("/spotifyapi/searchartist", {
+	let responseArt = await fetch(`${VARIABLES.API_HOST}:${VARIABLES.API_PORT}/one-list/spotifyapi/searchartist`, {
 		method: 'post',
 		headers: {
 	    	'Accept': 'application/json',
@@ -33,7 +34,7 @@ export default async function callSpotifyAPI(inputText, resultsQuota) {
 	})
 	*/
 	// Search for album
-	let responseAlb = await fetch("/spotifyapi/searchalbum", {
+	let responseAlb = await fetch(`${VARIABLES.API_HOST}:${VARIABLES.API_PORT}/one-list/spotifyapi/searchalbum`, {
 		method: 'post',
 		headers: {
 	    	'Accept': 'application/json',
@@ -46,7 +47,7 @@ export default async function callSpotifyAPI(inputText, resultsQuota) {
 	albumArr = toParsedArray('album', responseAlbJson);
 
 	// Search for track
-	let responseTra = await fetch("/spotifyapi/searchtrack", {
+	let responseTra = await fetch(`${VARIABLES.API_HOST}:${VARIABLES.API_PORT}/one-list/spotifyapi/searchtrack`, {
 		method: 'post',
 		headers: {
 	    	'Accept': 'application/json',

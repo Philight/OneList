@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import styled from 'styled-components';
 
-import PlaylistItem from './PlaylistItem';
+import PlaylistItem from '../components/PlaylistItem';
 import LoadingPage from './LoadingPage';
 
 const PlaylistContainer = styled.div`

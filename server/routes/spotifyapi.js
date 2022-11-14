@@ -122,7 +122,7 @@ router
 			console.log("track body: "+body);
 
 			fs.writeFile('./spotifyPrint/searchtrack.txt', JSON.stringify(body), function(err) {
-			  if(err) console.log(err)
+			  if(err) console.log(err);
 			})
 
 			return res.send(body);

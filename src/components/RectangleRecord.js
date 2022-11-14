@@ -9,7 +9,7 @@ import { PlaylistContext, PlaylistDispatchContext } from './../contexts/Playlist
 import { faPlus, faCheck } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const imageUrl = require("./../images/spotifysquare.jpg");
+const imageUrl = require("../assets/images/spotifysquare.jpg");
 
 const fillColor = keyframes`
   100% {

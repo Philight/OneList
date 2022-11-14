@@ -4,7 +4,7 @@ import styled, { keyframes } from 'styled-components';
 import RecordData from './RecordData';
 import CloudIcon from './CloudIcon';
 
-const defaultImgUrl = require("./../images/spotifysquare.jpg");
+const defaultImgUrl = require("../assets/images/spotifysquare.jpg");
 
 const Container = styled.div`
 	width: 90%;

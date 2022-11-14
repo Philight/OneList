@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import styled from 'styled-components';
 
-import Navigation from './../components/Navigation';
-import SideBar from './../components/SideBar';
-import LoadingPage from './../components/LoadingPage';
+import Navigation from './../main/Navigation';
+import SideBar from './../main/SideBar';
+import LoadingPage from './../pages/LoadingPage';
 
-import { SpotifyContext } from './../components/SpotifyContext';
+import { SpotifyContext } from './../contexts/SpotifyContext';
 
 import { faAngleDoubleRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const backgroundUrl = require("./../images/unicorn.jpg");
+const backgroundUrl = require("../assets/images/unicorn.jpg");
 
 const BackgroundOtherStyle = styled.div`
 	width: 100%;

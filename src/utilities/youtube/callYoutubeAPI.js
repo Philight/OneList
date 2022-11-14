@@ -1,5 +1,6 @@
 
 import toParsedArray from './toParsedArray';
+import { VARIABLES } from '../../data/ENV.js';
 
 export default async function callYoutubeAPI(inputText, resultsQuota) {
 	var queryObj = { 
@@ -12,7 +13,7 @@ export default async function callYoutubeAPI(inputText, resultsQuota) {
 	var trackArr = [];
 
 	// Search for artist
-	let responseArt = await fetch("/youtubeapi/searchartist", {
+	let responseArt = await fetch(`${VARIABLES.API_HOST}:${VARIABLES.API_PORT}/one-list/youtubeapi/searchartist`, {
 		method: 'post',
 		headers: {
 	    	'Accept': 'application/json',
@@ -23,9 +24,10 @@ export default async function callYoutubeAPI(inputText, resultsQuota) {
 	let responseArtJson = await responseArt.json();
 
 	artistArr = await toParsedArray('artist', responseArtJson);
-
+console.log('### callYoutubeAPI artistArr');
+console.log(artistArr);
 	// Search for album
-	let responseAlb = await fetch("/youtubeapi/searchalbum", {
+	let responseAlb = await fetch(`${VARIABLES.API_HOST}:${VARIABLES.API_PORT}/one-list/youtubeapi/searchalbum`, {
 		method: 'post',
 		headers: {
 	    	'Accept': 'application/json',
@@ -36,9 +38,11 @@ export default async function callYoutubeAPI(inputText, resultsQuota) {
 	let responseAlbJson = await responseAlb.json();
 
 	albumArr = await toParsedArray('album', responseAlbJson);
+console.log('### callYoutubeAPI albumArr');
+console.log(albumArr);
 
 	// Search for track
-	let responseTra = await fetch("/youtubeapi/searchtrack", {
+	let responseTra = await fetch(`${VARIABLES.API_HOST}:${VARIABLES.API_PORT}/one-list/youtubeapi/searchtrack`, {
 		method: 'post',
 		headers: {
 	    	'Accept': 'application/json',
@@ -49,6 +53,8 @@ export default async function callYoutubeAPI(inputText, resultsQuota) {
 	let responseTraJson = await responseTra.json();
 
 	trackArr = await toParsedArray('track', responseTraJson);
+console.log('### callYoutubeAPI trackArr');
+console.log(trackArr);
 
 	return { artist: artistArr, album: albumArr, track: trackArr };
 }

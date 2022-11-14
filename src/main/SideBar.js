@@ -1,15 +1,15 @@
 import React, { useState, useContext, useRef, useEffect } from "react";
 import styled from 'styled-components';
 
-import SideBarBody from "./SideBarBody";
-import AutosizeInputUnderline from "./AutosizeInputUnderline";
+import SideBarBody from "../components/SideBarBody";
+import AutosizeInputUnderline from "../components/AutosizeInputUnderline";
 
 import { PlaylistContext } from './../contexts/PlaylistContext';
 
 import { faAngleDoubleRight, faAngleDoubleLeft, faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const animationUrl = require("./../images/barsloading.svg");
+const animationUrl = require("../assets/images/barsloading.svg");
 
 const sidebarTextStyling2 = {
 	fontSize: '14px',

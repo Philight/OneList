@@ -2,23 +2,23 @@ import React, { Component } from "react";
 import './App.css';
 import { Route, Switch, BrowserRouter } from 'react-router-dom';
 
-import LandingPage from './components/LandingPage';
-import ResultsPage from './components/ResultsPage';
-import PlaylistPage from './components/PlaylistPage';
-import LoadingPage from './components/LoadingPage';
+import LandingPage from './pages/LandingPage';
+import ResultsPage from './pages/ResultsPage';
+import PlaylistPage from './pages/PlaylistPage';
+import LoadingPage from './pages/LoadingPage';
 
 import { LayoutLanding } from './layouts/LayoutLanding';
 import { LayoutOther } from './layouts/LayoutOther';
 import { LayoutPlaylist } from './layouts/LayoutPlaylist';
 
-import { SpotifyContext } from './components/SpotifyContext';
+import { SpotifyContext } from './contexts/SpotifyContext';
 import { PlaylistProvider } from './contexts/PlaylistContext';
 
-
+const URL_BASENAME = '/one-list';
 
 function App() {
   const [accessToken, setAccessToken] = React.useState("");
-  const [isLoading, setIsLoading] = React.useState(true);
+  const [isLoading, setIsLoading] = React.useState(false);
   const [error, setError] = React.useState();
 
   // [ {source:searchSrc, url:string, images:{}, name:string},.. ] 
@@ -52,6 +52,7 @@ function App() {
   }
 
   React.useEffect(() => {
+/*
     fetch("/spotifyapi/token")
       .then(result => {
         return result.text();
@@ -64,6 +65,7 @@ function App() {
           setIsLoading(true);
           setError(error);
       })
+*/
   }, [])
 
   if (error) {
@@ -72,7 +74,7 @@ function App() {
     return <LoadingPage />
   } else {
     return (
-      <BrowserRouter>
+      <BrowserRouter basename={URL_BASENAME}>
         <SpotifyContext.Provider value={{ 
           accessToken: accessToken, 
           artists: artists,

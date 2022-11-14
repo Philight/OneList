@@ -39,17 +39,17 @@
 
 @font-face {
   font-family: 'FugazOne';
-  src: local('FugazOne'), url(./fonts/FugazOne-Regular.ttf) format('truetype');
+  src: local('FugazOne'), url(./assets/fonts/FugazOne-Regular.ttf) format('truetype');
 }
 
 @font-face {
   font-family: 'Alegreya';
-  src: local('Alegreya'), url(./fonts/Alegreya-ExtraBold.ttf) format('truetype');
+  src: local('Alegreya'), url(./assets/fonts/Alegreya-ExtraBold.ttf) format('truetype');
 }
 
 @font-face {
   font-family: 'AlegreyaItalic';
-  src: local('Alegreya'), url(./fonts/Alegreya-ExtraBoldItalic.ttf) format('truetype');
+  src: local('Alegreya'), url(./assets/fonts/Alegreya-ExtraBoldItalic.ttf) format('truetype');
 }
 
 .app {

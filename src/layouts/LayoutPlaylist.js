@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from 'styled-components';
 
-import Navigation from './../components/Navigation';
+import Navigation from './../main/Navigation';
 
 const setHeight = (isLoading, overlayHeight) => {
 	if (isLoading) {

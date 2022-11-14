@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import styled from 'styled-components';
 
 
-const animationUrl = require("./../images/pulseloading.svg");
+const animationUrl = require("../assets/images/pulseloading.svg");
 
 
 const LoadingContainer = styled.div`
