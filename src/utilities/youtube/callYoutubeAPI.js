@@ -1,6 +1,6 @@
 
-import toParsedArray from './toParsedArray';
 import { VARIABLES } from '../../data/ENV.js';
+import toParsedArray from './toParsedArray';
 
 export default async function callYoutubeAPI(inputText, resultsQuota) {
 	var queryObj = { 

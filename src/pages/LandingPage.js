@@ -39,7 +39,7 @@ const StyleSubtitle = styled(StyleTextTemplate)`
 const moverightStyle = {
 	position: 'relative',
 	right: '-12px',
-	marginTop: '10px',	
+	marginTop: '20px',	
 }
 
 const LandingPage = (props) => {
@@ -48,12 +48,15 @@ const LandingPage = (props) => {
 			<StyleTitle>
 				All your favourite songs 
 				<br />
-				in one place
+				at one place
 			</StyleTitle>
 			<StyleSubtitle>
 				Tap below to create your own playlist.
 			</StyleSubtitle> 
-			<div style={moverightStyle}> <SearchBar layout="LayoutLanding"/> </div>
+
+			<div style={moverightStyle}> 
+				<SearchBar layout="LayoutLanding"/> 
+			</div>
 		</StyleLandingPage>
 	)
 }

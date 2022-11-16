@@ -17,7 +17,7 @@ const fillColor = keyframes`
   }
 `
 
-const Checkmark = styled.span`
+const SCheckmark = styled.span`
 	display: ${props => props.showCheckmark ? 'inline' : 'none'};
 	z-index: 0;
 	background-color: transparent;
@@ -33,7 +33,7 @@ const Checkmark = styled.span`
 }
 `
 
-const PlusButton = styled.button`
+const SPlusButton = styled.button`
 	display: ${props => props.showCheckmark ? 'none' : 'inline'};
 	z-index: 0;
 	background-color: transparent;
@@ -60,12 +60,13 @@ const PlusButton = styled.button`
     }
 `
 
-const Container = styled.div`
+const SContainer = styled.div`
 	margin-bottom: 2.6vh;
 	width: 95%;
 		
 	//border: 0.7vh solid rgb(255, 255, 255, 0.1);
 	border-radius: 10%/30%;
+	border-radius: 60px;
 	flex: 0 0 9%;	
 
 	display: flex;
@@ -76,7 +77,7 @@ const Container = styled.div`
 	position: relative;
 `
 
-const TransparentSquare = styled.div`
+const STransparentSquare = styled.div`
 	position: absolute;
 	width: 100%;
 	height: 100%;
@@ -101,9 +102,9 @@ const TransparentSquare = styled.div`
 	z-index: 0;
 `
 
-const ImageSquare = styled.div`
+const SImageSquare = styled.div`
 	background-image: url(${props => props.testMode ? imageUrl : props.image}); 
-	background-size: auto;
+	background-size: cover;
 	background-position: center;
 	background-repeat: no-repeat;
 
@@ -129,8 +130,9 @@ const cloudIconStyle = {
 	css: `
 		margin: 10px;
 		font-size: 30px;
-		color: #FFFFFF;
-		mix-blend-mode: soft-light;
+		/color: #FFFFFF;
+		opacity: 0.4;
+		/mix-blend-mode: soft-light;
 	`,
 }
 
@@ -162,9 +164,9 @@ const RectangleRecord = (props) => {
 	}
 
 	return (
-		<Container primarycolor={props.primarycolor}>
-			<TransparentSquare />
-			{ (images) ? <ImageSquare image={images.url} /> : <ImageSquare testMode missingImg /> }
+		<SContainer primarycolor={props.primarycolor}>
+			<STransparentSquare />
+			{ (images) ? <SImageSquare image={images.url} /> : <SImageSquare testMode missingImg /> }
 			<CloudIcon 
 				url={url} 
 				source={source} 
@@ -173,18 +175,18 @@ const RectangleRecord = (props) => {
 			/>
 			<RecordData {...props} isShown="true" />
 
-			<PlusButton 
+			<SPlusButton 
 				onClick={() => handlePlus({id, source, url, images, name, artists, album})}
 				showCheckmark={showCheckmark}
 			>
 				<FontAwesomeIcon icon={faPlus} />
-			</PlusButton>	
-			<Checkmark 				
+			</SPlusButton>	
+			<SCheckmark 				
 				showCheckmark={showCheckmark}
 			>
 				<FontAwesomeIcon icon={faCheck} />
-			</Checkmark>
-		</Container>
+			</SCheckmark>
+		</SContainer>
 	)
 
 }

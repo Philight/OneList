@@ -4,10 +4,13 @@ import { withRouter } from 'react-router-dom';
 
 import './SearchBar.css';
 import IconDropdown from './IconDropdown';
-import { searchSrc } from './IconDropdown';
+
+import { VARIABLES } from '../data/ENV.js';
+import { MUSIC_PLATFORMS } from '../data//MUSIC_PLATFORMS';
 
 import callSpotifyAPI from './../utilities/spotify/callSpotifyAPI';
 import callYoutubeAPI from './../utilities/youtube/callYoutubeAPI';
+import callSoundcloudAPI from './../utilities/soundcloud/callSoundcloudAPI';
 import callAllAPI from './../utilities/allclouds/callAllAPI';
 
 import { SpotifyContext } from '../contexts/SpotifyContext';
@@ -18,7 +21,7 @@ class SearchBar extends Component {
 
     	this.state = {
     		inputValue: '',
-    		searchSource: searchSrc.SPOTIFY,
+    		searchSource: MUSIC_PLATFORMS.SPOTIFY,
     		resultsQuota: 10,	// number of results 
     		testObj: { }
     	}
@@ -38,7 +41,7 @@ class SearchBar extends Component {
  		updateReadyState(false);
  		switch(this.state.searchSource) {
 
- 			case searchSrc.SPOTIFY:
+ 			case MUSIC_PLATFORMS.SPOTIFY:
 				//alert("Calling SpotifyAPI...");
 				callSpotifyAPI(this.state.inputValue, this.state.resultsQuota)
 					.then((searchObj) => {
@@ -49,7 +52,7 @@ class SearchBar extends Component {
 					})
  				break;
 
- 			case searchSrc.YOUTUBE:
+ 			case MUSIC_PLATFORMS.YOUTUBE:
  				//alert("Calling YoutubeAPI...");
 				callYoutubeAPI(this.state.inputValue, this.state.resultsQuota)
 					.then((searchObj) => {
@@ -60,7 +63,17 @@ class SearchBar extends Component {
 					})
  				break;
 
- 			case searchSrc.ALLCLOUDS:
+ 			case MUSIC_PLATFORMS.SOUNDCLOUD:
+				callSoundcloudAPI(this.state.inputValue, this.state.resultsQuota)
+					.then((searchObj) => {
+						updateArtist(searchObj.artist);
+						updateAlbum(searchObj.album);
+						updateTrack(searchObj.track);
+						updateReadyState(true);
+					})
+ 				break;
+
+ 			case MUSIC_PLATFORMS.ALLCLOUDS:
 				//alert("Calling All APIs...");
  				callAllAPI(this.state.inputValue, this.state.resultsQuota)
  					.then((searchObj) => {

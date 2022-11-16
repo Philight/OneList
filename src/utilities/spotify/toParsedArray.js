@@ -1,5 +1,5 @@
 
-import { searchSrc } from './../../components/IconDropdown';
+import { MUSIC_PLATFORMS } from './../../data/MUSIC_PLATFORMS.js';
 
 export default function toParsedArray(objType, obj) {
 	let parsedArray = [];
@@ -8,7 +8,7 @@ export default function toParsedArray(objType, obj) {
 		case 'artist':
 			obj.artists.items.forEach(item => {
 				parsedArray.push({ 
-					source: searchSrc.SPOTIFY,
+					source: MUSIC_PLATFORMS.SPOTIFY,
 					url: item.external_urls.spotify, 
 					...((item.images && item.images.length) ? {images: item.images[0]} : {images: false}), 
 					name: item.name
@@ -24,7 +24,7 @@ export default function toParsedArray(objType, obj) {
 				});
 
 				parsedArray.push({ 
-					source: searchSrc.SPOTIFY,
+					source: MUSIC_PLATFORMS.SPOTIFY,
 					url: item.external_urls.spotify, 
 					...((item.images && item.images.length) ? {images: item.images[0]} : {images: false}), 
 					name: item.name,
@@ -47,7 +47,7 @@ export default function toParsedArray(objType, obj) {
 
 				parsedArray.push({ 
 					id: `spotify-t-${item.name}-${albumObj.name}`,
-					source: searchSrc.SPOTIFY,
+					source: MUSIC_PLATFORMS.SPOTIFY,
 					url: item.external_urls.spotify, 
 					...((item.album.images && item.album.images.length) ? {images: item.album.images[0]} : {images: false}),
 					name: item.name,

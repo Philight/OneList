@@ -1,30 +1,39 @@
 import React, { useState, useContext, useRef, useEffect } from "react";
+import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
 import SideBarBody from "../components/SideBarBody";
 import AutosizeInputUnderline from "../components/AutosizeInputUnderline";
 
+import { VARIABLES } from "../data/ENV.js";
 import { PlaylistContext } from './../contexts/PlaylistContext';
 
-import { faAngleDoubleRight, faAngleDoubleLeft, faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons";
+import { faAngleDoubleRight, faAngleDoubleLeft, faAngleDoubleUp, faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const animationUrl = require("../assets/images/barsloading.svg");
+import { ReactComponent as IPulseLoading } from "../assets/images/loaders/pulseloading.svg";
+import { ReactComponent as IBarsLoading } from "../assets/images/loaders/barsloading.svg";
+
+const API_CREATEPLAYLISTURL = `${VARIABLES.API_HOST}:${VARIABLES.API_PORT}/one-list/database/createplaylist`;
+const PLAYLISTURL = (`${VARIABLES.APP_URL+VARIABLES.BASENAME}/playlist`);
 
 const sidebarTextStyling2 = {
 	fontSize: '14px',
 	marginRight: '1px',
 };
 
-const ListButton = styled.button`
-	visibility: ${props => props.sidebarShown ? 'hidden' : 'visible'};
+const SListButton = styled.button`
+	/visibility: ${props => props.sidebarShown ? 'hidden' : 'visible'};
 
 	position: fixed;
-	left: -2px;
-	top: 14.5vh;
+    left: -14px;
+    left: ${props => props.sidebarShown ? '-100px' : '-14px'};
+    top: 13.5vh;
 	z-index: 2;
+	transform: rotate(90deg);
 
 	display: inline-flex;
+	flex-direction: column;
 	align-items: center;
 
 	font-family: 'FugazOne';
@@ -35,10 +44,11 @@ const ListButton = styled.button`
 	outline: none;
 	border: none;
 	border-radius: 0px 40px 40px 0px;
+	border-radius: 90px 90px 0px 0px;
 
 	box-shadow: 4px 3px 10px 1px #111c22;
     cursor: pointer; 
-    transition: 0.1s all;
+    transition: 0.3s left ease-in-out;
 
 	&:active {
 		transform: scale(0.96); 
@@ -47,7 +57,7 @@ const ListButton = styled.button`
 	}
 `
 
-const ListHideButton = styled.button`
+const SListHideButton = styled.button`
 	visibility: ${props => props.sidebarShown ? 'visible' : 'hidden'};
 
 	position: absolute;
@@ -73,7 +83,7 @@ const ListHideButton = styled.button`
 	}
 `
 
-const Playlist = styled.div`
+const SPlaylist = styled.div`
 	visibility: ${props => props.sidebarShown ? 'visible' : 'visible'};
 
 	width: 30%;
@@ -87,7 +97,7 @@ const Playlist = styled.div`
 
  	position: fixed;
  	left: ${props => props.sidebarShown ? '0' : '-30%'};
- 	transition: 0.2s left;
+ 	transition: 0.3s left ease-out;
 
  	height: calc(100vh - 10vh);
 
@@ -99,7 +109,7 @@ const Playlist = styled.div`
  	z-index: 1;
 `
 
-const LoadingOverlay = styled.div`
+const SLoadingOverlay = styled.div`
 	width: 100%;
 	height: 100%;
 	position: absolute;
@@ -114,7 +124,7 @@ const LoadingOverlay = styled.div`
 
 `
 
-const ListDetails = styled.span`
+const SListDetails = styled.span`
 	align-self: flex-start;
 
 	width: 100%;
@@ -131,7 +141,7 @@ const ListDetails = styled.span`
 
 `
 
-const SideBarHead = styled.div`
+const SSideBarHead = styled.div`
 	//border: 1px solid var(--tertiarycolor);
 	width: 100%;
 	height: 30%;
@@ -171,12 +181,13 @@ const playlistTitleOnFocus = {
 	`
 }
 
-const CreateLinkButton = styled.button`
+const SCreateLinkButton = styled.button`
 	align-self: center;
 
-	border-radius: 10%/45%;
+	border-radius: 100px;
+	border: none;
 	outline: none;
-	padding: 4px 12px;
+	padding: 6px 18px 5px;
 
 	background-color: rgb(var(--tertiarycolor));
 	color: white;
@@ -191,9 +202,10 @@ const CreateLinkButton = styled.button`
 	margin-bottom: 2%;
 `
 
-const LinkArea = styled.div`
+const SLinkArea = styled.div`
 	position: relative;
 	left: 8px;
+
 
 	display: flex;
 	flex-direction: row;
@@ -202,6 +214,8 @@ const LinkArea = styled.div`
 	// Icon style
 	> a {
 		font-size: 16px;
+	    margin-left: 1px;
+	    margin-bottom: 2px;
 
 		${props => !props.linkIsSet 
 			? `pointer-events: none; color: rgb(var(--silvercolor2));` 
@@ -213,7 +227,7 @@ const LinkArea = styled.div`
 	}
 `
 
-const Link = styled.input`
+const SLink = styled.input`
 	outline: none;
 	width: 160px;
 	padding: 1px;
@@ -225,12 +239,12 @@ const Link = styled.input`
 			color: white; 
 			border: 4px solid rgb(var(--tertiarycolor));`
 	};
-	border-radius: 10%/35%;
+	border-radius: 10px;
 	
 	margin-right: 2px;
 `
 
-const CopyText = styled.span`
+const SCopyText = styled.span`
 	cursor: pointer;
 `
 
@@ -245,7 +259,7 @@ const SideBar = (props) => {
 	const playlist = useContext(PlaylistContext);
 	const [playlistIsEmpty, setPlaylistIsEmpty] = useState(true);
 
-	const [inputLink, setInputLink] = useState("Link");
+	const [inputLink, setInputLink] = useState("");
 	const [linkIsSet, setLinkIsSet] = useState(false);
 
 	useEffect(() => {
@@ -275,7 +289,7 @@ const SideBar = (props) => {
 	const sendPlaylistToServer = () => {
 		//alert("Sending playlist to server");
 
-		let defaultTitle = "OneList";
+		let defaultTitle = "one.list";
 		if (playlistTitle) {
 			defaultTitle = playlistTitle;
 		}
@@ -286,7 +300,7 @@ const SideBar = (props) => {
 		}
 		
 		setIsLoading(true);
-		fetch("/database/createplaylist", {
+		fetch(API_CREATEPLAYLISTURL, {
 			method: 'post',
 			headers: {
 		    	'Accept': 'application/json',
@@ -295,8 +309,8 @@ const SideBar = (props) => {
 			body: JSON.stringify({ playlistObject })
 		})
 			.then((result) => result.text())
-			.then((result) => {
-				setInputLink(result);
+			.then((playlistId) => {
+				setInputLink(`${PLAYLISTURL}/${playlistId}`);
 				setLinkIsSet(true);
 				setIsLoading(false);
 			})
@@ -308,18 +322,18 @@ const SideBar = (props) => {
 
 	return (
 		<div>
-			<ListButton onClick={props.onClick} sidebarShown={props.sidebarShown}>
+			<SListButton onClick={props.onClick} sidebarShown={props.sidebarShown}>
+	    		<FontAwesomeIcon icon={faAngleDoubleUp} style={{}} size="sm" />
 				<span style={sidebarTextStyling2}>Playlist</span>    		
-	    		<FontAwesomeIcon icon={faAngleDoubleRight} />
-			</ListButton>
+			</SListButton>
 
-			<Playlist sidebarShown={props.sidebarShown}>
-				<LoadingOverlay isLoading={isLoading}>
-					<img src={animationUrl} />
-				</LoadingOverlay>
+			<SPlaylist sidebarShown={props.sidebarShown}>
+				<SLoadingOverlay isLoading={isLoading}>
+					<IBarsLoading />
+				</SLoadingOverlay>
 
-				<ListDetails>Playlist details</ListDetails>
-				<SideBarHead 
+				<SListDetails>Playlist details</SListDetails>
+				<SSideBarHead 
 					ref={playlistHeadRef}
 				>
 					<AutosizeInputUnderline 
@@ -333,27 +347,27 @@ const SideBar = (props) => {
 						onFocusCSS={playlistTitleOnFocus.css}
 					/>
 
-					<CreateLinkButton onClick={sendPlaylistToServer} disabled={playlistIsEmpty}>
+					<SCreateLinkButton onClick={sendPlaylistToServer} disabled={playlistIsEmpty}>
 						Create link
-					</CreateLinkButton> 
-					<LinkArea linkIsSet={linkIsSet}>
-						<Link value={inputLink} readonly linkIsSet={linkIsSet}/>
+					</SCreateLinkButton> 
+					<SLinkArea linkIsSet={linkIsSet}>
+						<SLink value={inputLink} readonly linkIsSet={linkIsSet} placeholder="<LINK>" />
 						<a href={inputLink} target="_blank"><FontAwesomeIcon icon={faExternalLinkAlt} /></a>
-					</LinkArea>
-					<CopyText 
+					</SLinkArea>
+					<SCopyText 
 						onClick={onCopy}
 					>
 						Copy
-					</CopyText>
-				</SideBarHead>
+					</SCopyText>
+				</SSideBarHead>
 
-				<ListHideButton onClick={props.onClick} sidebarShown={props.sidebarShown}> 
+				<SListHideButton onClick={props.onClick} sidebarShown={props.sidebarShown}> 
 					<FontAwesomeIcon icon={faAngleDoubleLeft} /> 
-				</ListHideButton>
+				</SListHideButton>
 
 				<SideBarBody />
 
-			</Playlist>
+			</SPlaylist>
 		</div>
 	)
 	

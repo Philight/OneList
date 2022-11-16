@@ -11,7 +11,7 @@ const layoutTheme = (layout) => {
 				background-color: transparent;
 				border-bottom: none;
 			`
-		case "LayoutOther":
+		case "LayoutResults":
 			return `
 				background-color: rgb(var(--primarycolor));
 				border-bottom: 2px solid rgb(var(--secondarycolor));
@@ -70,11 +70,11 @@ const Navigation = (props) => {
 
 	switch(props.layout) {
 		case "LayoutLanding":
-		case "LayoutOther":
+		case "LayoutResults":
 			return (
 				<NavBar layout={props.layout}>
-					<NavElem><Link to="/" style={linkStyling}>OneList</Link></NavElem>
-					<NavElem>{(props.layout === "LayoutOther") && <SearchBar />}</NavElem>
+					<NavElem><Link to="/" style={linkStyling}>one.list</Link></NavElem>
+					<NavElem>{(props.layout === "LayoutResults") && <SearchBar />}</NavElem>
 				</NavBar>
 			);
 		case "LayoutPlaylist":

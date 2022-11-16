@@ -8,13 +8,13 @@ import PlaylistPage from './pages/PlaylistPage';
 import LoadingPage from './pages/LoadingPage';
 
 import { LayoutLanding } from './layouts/LayoutLanding';
-import { LayoutOther } from './layouts/LayoutOther';
+import { LayoutResults } from './layouts/LayoutResults';
 import { LayoutPlaylist } from './layouts/LayoutPlaylist';
 
 import { SpotifyContext } from './contexts/SpotifyContext';
 import { PlaylistProvider } from './contexts/PlaylistContext';
 
-const URL_BASENAME = '/one-list';
+import { VARIABLES } from "./data/ENV.js";
 
 function App() {
   const [accessToken, setAccessToken] = React.useState("");
@@ -74,7 +74,7 @@ function App() {
     return <LoadingPage />
   } else {
     return (
-      <BrowserRouter basename={URL_BASENAME}>
+      <BrowserRouter basename={VARIABLES.BASENAME}>
         <SpotifyContext.Provider value={{ 
           accessToken: accessToken, 
           artists: artists,
@@ -89,7 +89,7 @@ function App() {
           <PlaylistProvider>
             <Switch>
               <RouteWrapper exact path="/" component={LandingPage} layout={LayoutLanding} />
-              <RouteWrapper path="/results" component={ResultsPage} layout={LayoutOther} />
+              <RouteWrapper path="/results" component={ResultsPage} layout={LayoutResults} />
               <RouteWrapper path="/playlist/:playlistId" component={PlaylistPage} layout={LayoutPlaylist} />
             </Switch>
           </PlaylistProvider> 

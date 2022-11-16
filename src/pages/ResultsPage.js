@@ -7,11 +7,11 @@ import RectangleRecord from '../components/RectangleRecord';
 import { SpotifyContext } from '../contexts/SpotifyContext';
 import { TestData } from './../test/TestData';
 
-const ResultsContainer = styled.div`
+const SResultsContainer = styled.div`
 	width: 70% ;
  	margin-left: ${props => props.sidebarShown ? '30%' : '15%'} ;
  	margin-right: ${props => props.sidebarShown ? '0' : '15%'} ;
- 	transition: 0.2s margin;
+ 	transition: 0.3s margin;
 
  	margin-top: 10vh; /* - line height of NavBar */
  	padding-top: 1px;
@@ -24,13 +24,13 @@ const ResultsContainer = styled.div`
 
 `
 
-const ArtistColumn = styled.div`
+const SArtistColumn = styled.div`
  	//border: rgb(var(--secondarycolor)) solid;
  	//border-width: 0 1px;
  	border-left: rgb(var(--secondarycolor)) solid 1px;
 `
 
-const FlexContainer = styled.div`
+const SFlexContainer = styled.div`
 	display: flex;
  	flex-direction: column;
  	align-items: center;
@@ -40,16 +40,16 @@ const FlexContainer = styled.div`
  	width: 100%;	
 `
 
-const TrackColumn = styled.div`
+const STrackColumn = styled.div`
 `
 
-const AlbumColumn = styled.div`
+const SAlbumColumn = styled.div`
  	//border: rgb(var(--secondarycolor)) solid;
  	//border-width: 0 1px;
  	border-right: rgb(var(--secondarycolor)) solid 1px;
 `
 
-const ColumnTitle = styled.h1`
+const SColumnTitle = styled.h1`
  	text-align: center;
 	margin: 0vh;
 	padding: 2vh;
@@ -63,37 +63,37 @@ const ResultsPage = (props) => {
 	return (
 		<SpotifyContext.Consumer>
 		{ ({ artists, albums, tracks }) => (
-			<ResultsContainer sidebarShown={props.sidebarShown} >
-				<ArtistColumn>
-					<ColumnTitle>Artists</ColumnTitle>
-					<FlexContainer>
+			<SResultsContainer sidebarShown={props.sidebarShown} >
+				<SArtistColumn>
+					<SColumnTitle>Artists</SColumnTitle>
+					<SFlexContainer>
 					
 						{/* TestData.artists.map((artist, i) => <SquareRecord {...artist} /> ) */}
 			
 						{ artists.map((object, i) => <SquareRecord {...object} />) }	
-					</FlexContainer>
-				</ArtistColumn>
+					</SFlexContainer>
+				</SArtistColumn>
 
-				<TrackColumn>
-					<ColumnTitle>Tracks</ColumnTitle>
-					<FlexContainer>
+				<STrackColumn>
+					<SColumnTitle>Tracks</SColumnTitle>
+					<SFlexContainer>
 
 						{/* TestData.tracks.map((track, i) => <RectangleRecord {...track} /> ) */}
 
 						{ tracks.map((object, i) => <RectangleRecord {...object} />) }
-					</FlexContainer>
-				</TrackColumn>
+					</SFlexContainer>
+				</STrackColumn>
 
-				<AlbumColumn>
-					<ColumnTitle>Albums</ColumnTitle>
-					<FlexContainer>
+				<SAlbumColumn>
+					<SColumnTitle>Albums</SColumnTitle>
+					<SFlexContainer>
 
 						{/* TestData.albums.map((album, i) => <SquareRecord {...album} /> ) */}
 						
 						{ albums.map((object, i) => <SquareRecord {...object} />) }
-					</FlexContainer>
-				</AlbumColumn>
-			</ResultsContainer>
+					</SFlexContainer>
+				</SAlbumColumn>
+			</SResultsContainer>
 		)}
 		</SpotifyContext.Consumer>
 	)

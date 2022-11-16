@@ -5,51 +5,61 @@ import { faSpotify, faSoundcloud, faYoutube } from "@fortawesome/free-brands-svg
 import { faCompactDisc } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-export const searchSrc = {
+import { MUSIC_PLATFORMS, MUSIC_CLOUDS } from '../data/MUSIC_PLATFORMS.js';
+/*
+export const MUSIC_PLATFORMS = {
 	SPOTIFY: 'spotify',
 	SOUNDCLOUD: 'soundcloud',
 	YOUTUBE: 'youtube',
 	ALLCLOUDS: 'allclouds'
 }
-
+*/
 const musicClouds = [
-	{ id: searchSrc.SPOTIFY, icon: faSpotify },
-	{ id: searchSrc.YOUTUBE, icon: faYoutube },
-	{ id: searchSrc.SOUNDCLOUD, icon: faSoundcloud },
-	{ id: searchSrc.ALLCLOUDS, icon: faCompactDisc },
+	{ id: MUSIC_PLATFORMS.SPOTIFY, icon: faSpotify },
+	{ id: MUSIC_PLATFORMS.YOUTUBE, icon: faYoutube },
+	{ id: MUSIC_PLATFORMS.SOUNDCLOUD, icon: faSoundcloud },
+	{ id: MUSIC_PLATFORMS.ALLCLOUDS, icon: faCompactDisc },
 ]
 
-const Dropdown = styled.div`
+const SDropdown = styled.div`
 	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 
 	//border: 1px red solid;
 `
 
-const DropdownList = styled.ul`
+const SDropdownList = styled.ul`
 	list-style: none; 
-
 	margin: 0;
 	padding: 0;
 
-	display: ${props => props.display};
-	top: 0px;
 	position: absolute;
+	/display: ${props => props.show ? 'flex' : 'none'};
 
+	display: flex;
+	opacity: ${props => props.show ? '1' : '0'};
+	top: ${props => props.show ? '0' : '-100px'};
+	visibility: ${props => props.show ? 'visible' : 'hidden'};
+	flex-direction: column;
+
+	transition: 0.3s opacity cubic-bezier(1,-0.01,.71,.7), 0.3s top cubic-bezier(.01,1,.75,.85); 
 `
-{/* ${Dropdown}:hover & {
+{/* ${SDropdown}:hover & {
 		display: list-item;
 	}
 */}
     
 const handleColor = source => {
 	switch(source) {
-		case searchSrc.SPOTIFY:
+		case MUSIC_PLATFORMS.SPOTIFY:
 			return "color: #1DB954; background-color: #000000;";
-		case searchSrc.SOUNDCLOUD:
+		case MUSIC_PLATFORMS.SOUNDCLOUD:
 			return "color: #FFFFFF; background-color: #FF3A00;";
-		case searchSrc.YOUTUBE:
+		case MUSIC_PLATFORMS.YOUTUBE:
 			return "color: #FF0000; background-color: #FFFFFF;";
-		case searchSrc.ALLCLOUDS:
+		case MUSIC_PLATFORMS.ALLCLOUDS:
 			return "color: #000000; background-color: #FFFFFF;";
 		default:
 			return;
@@ -59,40 +69,43 @@ const handleColor = source => {
 /* Icon positioning, blend based on layout */
 const handleLayout = (layout) => {
 	if (layout === 'LayoutLanding') {
-		return `line-height: 40px;
-				height: 40px; 
+		return `
 				mix-blend-mode: screen;`
 	} else {
 	// LayoutOther
-		return `line-height: 45px; 
-				height: 40px; 
+		return `line-height: normal; 
 				mix-blend-mode: normal;`
 	}
 }
 
-const ItemPlaceholder = styled.li`
+const SItemPlaceholder = styled.li`
 	width: 45px;
+	height: 45px;
 
-    display: ${props => props.show ? 'list-item' : 'list-item'};
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    ${props => props.hidePlaceholder ? 'visibility: hidden;' : '' }
+
     list-style: none;
     text-align: center;
 
     ${props => props.show 
     	? handleColor(props.id) 
     	: "color: transparent; background-color: transparent; border: 4px solid transparent;"}
+
  	${props => handleLayout(props.layout)};
+	${props => handleColor(props.id)};
 
     padding: 0px;
     font-size: 30px;
-    border-radius: 50%;//
-    border: 4px solid rgba(var(--silvercolor2), 1);
-
-    
+    border-radius: 50%;
+    border: 3.4px solid rgba(var(--silvercolor2), 1);
 `
 
-const Item = styled(ItemPlaceholder)`
-	display: list-item;
-
+const SItem = styled(SItemPlaceholder)`
+	margin-bottom: 2px;
 	${props => handleColor(props.id)};
 `
 
@@ -101,67 +114,88 @@ class ItemDropdown extends Component {
 		super(props);
 
 		this.state = {
-			currentIcon: faSpotify,
-			toggleDropdownList: 'none',
-			showCurrentIcon: true,
-			id: searchSrc.SPOTIFY,
+			cloudId: MUSIC_PLATFORMS.SPOTIFY,
+//			currentIcon: faSpotify,
+			showSelectionDropdown: false,
 		}
+		this.handleSelectIcon = this.handleSelectIcon.bind(this);
+		this.handleCloseList = this.handleCloseList.bind(this);
+		this.handleChooseIcon = this.handleChooseIcon.bind(this);
+		this.handleOutsideClick = this.handleOutsideClick.bind(this);
 	}
 
 	handleSelectIcon(event) {
-		this.setState({ toggleDropdownList: 'list-item', showCurrentIcon: false });
+		document.addEventListener("click", this.handleOutsideClick, false);
+		this.setState({ showSelectionDropdown: true });
 	}
 
-	handleChooseIcon(event) {
-		switch(event.target.id) {
-			case searchSrc.SPOTIFY:
-				this.setState({ currentIcon: faSpotify, id: searchSrc.SPOTIFY, toggleDropdownList: 'none', showCurrentIcon: true });
-				this.props.passSource(searchSrc.SPOTIFY);
+	handleCloseList() {
+		document.removeEventListener("click", this.handleOutsideClick, false);
+		this.setState({ showSelectionDropdown: false });
+	}
+
+	handleChooseIcon(event, cloudId) {
+		switch(cloudId) {
+			case MUSIC_PLATFORMS.SPOTIFY:
+//				this.setState({ currentIcon: faSpotify, cloudId: MUSIC_PLATFORMS.SPOTIFY, showSelectionDropdown: false });
+				this.setState({ cloudId: MUSIC_PLATFORMS.SPOTIFY, showSelectionDropdown: false });
+				this.props.passSource(MUSIC_PLATFORMS.SPOTIFY);
 				break;
-			case searchSrc.SOUNDCLOUD:
-				this.setState({ currentIcon: faSoundcloud, id: searchSrc.SOUNDCLOUD, toggleDropdownList: 'none', showCurrentIcon: true });
-				this.props.passSource(searchSrc.SOUNDCLOUD);
+			case MUSIC_PLATFORMS.SOUNDCLOUD:
+//				this.setState({ currentIcon: faSoundcloud, cloudId: MUSIC_PLATFORMS.SOUNDCLOUD, showSelectionDropdown: false });
+				this.setState({ cloudId: MUSIC_PLATFORMS.SOUNDCLOUD, showSelectionDropdown: false });
+				this.props.passSource(MUSIC_PLATFORMS.SOUNDCLOUD);
 				break;
-			case searchSrc.YOUTUBE:
-				this.setState({ currentIcon: faYoutube, id: searchSrc.YOUTUBE, toggleDropdownList: 'none', showCurrentIcon: true });
-				this.props.passSource(searchSrc.YOUTUBE);
+			case MUSIC_PLATFORMS.YOUTUBE:
+//				this.setState({ currentIcon: faYoutube, cloudId: MUSIC_PLATFORMS.YOUTUBE, showSelectionDropdown: false });
+				this.setState({ cloudId: MUSIC_PLATFORMS.YOUTUBE, showSelectionDropdown: false });
+				this.props.passSource(MUSIC_PLATFORMS.YOUTUBE);
 				break;
-			case searchSrc.ALLCLOUDS:
-				this.setState({ currentIcon: faCompactDisc, id: searchSrc.ALLCLOUDS, toggleDropdownList: 'none', showCurrentIcon: true });
-				this.props.passSource(searchSrc.ALLCLOUDS);
+			case MUSIC_PLATFORMS.ALLCLOUDS:
+//				this.setState({ currentIcon: faCompactDisc, cloudId: MUSIC_PLATFORMS.ALLCLOUDS, showSelectionDropdown: false });
+				this.setState({ cloudId: MUSIC_PLATFORMS.ALLCLOUDS, showSelectionDropdown: false });
+				this.props.passSource(MUSIC_PLATFORMS.ALLCLOUDS);
 				break;	
 		}
 	}
 
+	handleOutsideClick = e => {
+		if (!this.node.contains(e.target)) this.handleCloseList();
+	};
+
 	render () {
 		return (
-			<Dropdown>
-				<ItemPlaceholder 
-					id={this.state.id} 
-					onClick={this.handleSelectIcon.bind(this)} 
+			<SDropdown
+		        ref={node => { this.node = node; }}
+			>
+				<SItemPlaceholder 
+					id={this.state.cloudId} 
 					layout={this.props.layout}
-					show={this.state.showCurrentIcon}
+					hidePlaceholder={this.state.showSelectionDropdown ? true : false}
+					onClick={event => this.handleSelectIcon(event)}
 				>
 					<FontAwesomeIcon 
-						id={this.state.id} 
-						icon={this.state.currentIcon} 
+						id={this.state.cloudId} 
+						icon={MUSIC_CLOUDS[this.state.cloudId]['icon']} 
 						fixedWidth
-						onClick={this.handleSelectIcon.bind(this)}
 					/>
-				</ItemPlaceholder>
-				
-				<DropdownList display={this.state.toggleDropdownList}>
-					{ musicClouds.map(cloud => 
-						<Item id={cloud.id} onClick={this.handleChooseIcon.bind(this)} layout={this.props.layout}>
+				</SItemPlaceholder>
+
+				<SDropdownList show={this.state.showSelectionDropdown}>
+					{ Object.keys(MUSIC_CLOUDS).map(cloudKey => 
+//					{ musicClouds.map(cloud => 
+						<SItem id={cloudKey} 
+							layout={this.props.layout}
+							onClick={event => this.handleChooseIcon(event, cloudKey)}
+						>
 							<FontAwesomeIcon 
-								id={cloud.id}
-								icon={cloud.icon}
-								onClick={this.handleChooseIcon.bind(this)}
+								id={cloudKey}
+								icon={MUSIC_CLOUDS[cloudKey]['icon']}
 							/>
-						</Item>
+						</SItem>
 					) }			
-				</DropdownList>
-			</Dropdown>
+				</SDropdownList>
+			</SDropdown>
 		)
 	}
 	

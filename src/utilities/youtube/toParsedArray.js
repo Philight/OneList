@@ -1,5 +1,5 @@
 
-import { searchSrc } from './../../components/IconDropdown';
+import { MUSIC_PLATFORMS } from './../../data/MUSIC_PLATFORMS.js';
 
 function foundArtistName(titleName) {
 	let dashIndex = titleName.indexOf("-");
@@ -85,7 +85,7 @@ export default async function toParsedArray(objType, obj) {
 			//obj.items.forEach(item => {
 			for (var item of obj.items) {
 				parsedArray.push({ 
-					source: searchSrc.YOUTUBE,
+					source: MUSIC_PLATFORMS.YOUTUBE,
 					url: 'https://www.youtube.com/channel/'+item.snippet.channelId,
 					...((item.snippet.thumbnails && Object.keys(item.snippet.thumbnails).length) ? {images: item.snippet.thumbnails.high} : {images: false}), 
 					name: item.snippet.channelTitle,
@@ -115,7 +115,7 @@ export default async function toParsedArray(objType, obj) {
 				//alert(imageObj);
 
 				parsedArray.push({
-					source: searchSrc.YOUTUBE, 
+					source: MUSIC_PLATFORMS.YOUTUBE, 
 					url: (item.id.videoId ? ('https://www.youtube.com/watch?v='+item.id.videoId) : ('https://www.youtube.com/playlist?list='+item.id.playlistId)),
 					images: imageObj,
 					//...((item.snippet.thumbnails && Object.keys(item.snippet.thumbnails).length) ? {images: item.snippet.thumbnails.high} : {images: false}), 
@@ -146,7 +146,7 @@ export default async function toParsedArray(objType, obj) {
 
 				parsedArray.push({ 
 					id: `youtube-t-${trackTitle}-${item.snippet.channelTitle}`,
-					source: searchSrc.YOUTUBE,
+					source: MUSIC_PLATFORMS.YOUTUBE,
 					url: 'https://www.youtube.com/watch?v='+item.id.videoId, 
 					images: imageObj,
 					//...((item.snippet.thumbnails && Object.keys(item.snippet.thumbnails).length) ? {images: item.snippet.thumbnails.high} : {images: false}), 

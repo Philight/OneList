@@ -2,7 +2,11 @@ import React, { Component } from "react";
 import styled from 'styled-components';
 
 import PlaylistItem from '../components/PlaylistItem';
-import LoadingPage from './LoadingPage';
+import LoadingPage from '../pages/LoadingPage';
+
+import { VARIABLES } from "../data/ENV.js";
+
+const API_GETPLAYLISTURL = `${VARIABLES.API_HOST}:${VARIABLES.API_PORT}/one-list/database/getplaylist`;
 
 const PlaylistContainer = styled.div`
 	width: 50%;
@@ -61,7 +65,8 @@ class PlaylistPage extends Component {
 		this.props.updateLoading(true);
 
 		const playlistId = this.props.match.params.playlistId; // useParams() 84f86b4ffb1443669990
-		fetch("/database/?" + new URLSearchParams({
+
+		fetch(API_GETPLAYLISTURL+ '?' +new URLSearchParams({
 		    playlistId: playlistId,
 		}))
 			.then((response) => { 

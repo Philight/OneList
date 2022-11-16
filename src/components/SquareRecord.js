@@ -6,7 +6,7 @@ import CloudIcon from './CloudIcon';
 
 const defaultImgUrl = require("../assets/images/spotifysquare.jpg");
 
-const Container = styled.div`
+const SContainer = styled.div`
 	width: 90%;
 	padding: 45% 0;
 	position: relative;
@@ -27,7 +27,7 @@ const Container = styled.div`
 	}
 `
 
-const ImageSquare = styled.div`
+const SImageSquare = styled.div`
 	position: absolute;
 	z-index: 0;
 	width: 100%;
@@ -55,7 +55,7 @@ const ImageSquare = styled.div`
 
 `
 
-const CenterContent = styled.div`
+const SCenterContent = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -72,7 +72,8 @@ const CenterContent = styled.div`
 const cloudIconStyle = {
 	css: `
 		font-size: 30px;
-		color: gray;
+		/color: gray;
+		opacity: 0.6;
 		mix-blend-mode: screen;
 	`,
 }
@@ -83,13 +84,13 @@ const SquareRecord = (props) => {
 	const [isShown, setIsShown] = useState(false);
 	
 	return (
-		<Container primarycolor={props.primarycolor}>
-        	<ImageSquare 
+		<SContainer primarycolor={props.primarycolor}>
+        	<SImageSquare 
         		image={() => images ? images.url : defaultImgUrl} 
         		onMouseEnter={() => setIsShown(true)}
 				onMouseLeave={() => setIsShown(false)}
 			>
-				<CenterContent>
+				<SCenterContent>
             		<RecordData {...props} isShown={isShown} />
             		<CloudIcon 
             			source={source}
@@ -97,9 +98,9 @@ const SquareRecord = (props) => {
             			hover 
             			styleCSS={cloudIconStyle.css}
             		/>
-            	</CenterContent>
-        	</ImageSquare>
-		</Container>
+            	</SCenterContent>
+        	</SImageSquare>
+		</SContainer>
 	)
 
 }
