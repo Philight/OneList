@@ -1,6 +1,5 @@
 {
   "name": "one-list",
-  "proxy": "http://localhost:8080",
   "homepage": "https://philight.github.io/one-list",
   "version": "0.1.0",
   "private": true,
@@ -26,8 +25,7 @@
     "styled-components": "^5.2.0"
   },
   "scripts": {
-    "start-dev": "nodemon App.js",
-    "build": "react-scripts build",
+    "build": "react-scripts build && copy build\\index.html build\\404.html",    
     "build-win": "rd /s /q public && webpack --mode development",
     "build-dev": "npx webpack serve --mode development --progress --port 7000",
     "start": "react-scripts start",

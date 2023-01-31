@@ -6,7 +6,7 @@ import LoadingPage from '../pages/LoadingPage';
 
 import { VARIABLES } from "../data/ENV.js";
 
-const API_GETPLAYLISTURL = `${VARIABLES.API_HOST}:${VARIABLES.API_PORT}/one-list/database/getplaylist`;
+const API_GETPLAYLISTURL = `${VARIABLES.API_HOST}:${VARIABLES.API_PORT+VARIABLES.BASENAME}/database/getplaylist`;
 
 const PlaylistContainer = styled.div`
 	width: 50%;
@@ -61,10 +61,13 @@ class PlaylistPage extends Component {
 	}
 
 	componentWillMount() {
+console.log(`### PlaylistPage`);		
+console.log(`### PlaylistPage API_GETPLAYLISTURL: ${API_GETPLAYLISTURL}`);		
 		this.setState({ isLoading: true });
 		this.props.updateLoading(true);
 
 		const playlistId = this.props.match.params.playlistId; // useParams() 84f86b4ffb1443669990
+console.log(`### PlaylistPage playlistId: ${playlistId}`);		
 
 		fetch(API_GETPLAYLISTURL+ '?' +new URLSearchParams({
 		    playlistId: playlistId,
@@ -82,7 +85,7 @@ class PlaylistPage extends Component {
 
 			})
 			.catch(error => error.text().then(errorMsg => {
-				alert(errorMsg);
+				console.error(errorMsg);
 				this.props.updateLoading(true);
 				this.setState({ isLoading: true, error: errorMsg })
 			}));

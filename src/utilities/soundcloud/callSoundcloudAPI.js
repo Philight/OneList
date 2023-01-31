@@ -1,6 +1,6 @@
 import { VARIABLES } from '../../data/ENV.js';
 
-const API_TRACKURL = `${VARIABLES.API_HOST}:${VARIABLES.API_PORT}/one-list/soundcloudapi/searchkeyword`;
+const API_SEARCH_URL = `${VARIABLES.API_HOST}:${VARIABLES.API_PORT}/one-list/soundcloudapi/searchkeyword`;
 
 export default async function callSoundcloudAPI(searchString, resultsQuota) {
 	const queryObj = { 
@@ -8,7 +8,7 @@ export default async function callSoundcloudAPI(searchString, resultsQuota) {
 		resultsLimit: resultsQuota 
 	};
 
-	let responseTra = await fetch(API_TRACKURL, {
+	let responseTra = await fetch(API_SEARCH_URL, {
 		method: 'post',
 		headers: {
 	    	'Accept': 'application/json',

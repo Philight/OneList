@@ -14,7 +14,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ReactComponent as IPulseLoading } from "../assets/images/loaders/pulseloading.svg";
 import { ReactComponent as IBarsLoading } from "../assets/images/loaders/barsloading.svg";
 
-const API_CREATEPLAYLISTURL = `${VARIABLES.API_HOST}:${VARIABLES.API_PORT}/one-list/database/createplaylist`;
+//const API_CREATEPLAYLISTURL = `${VARIABLES.API_HOST}:${VARIABLES.API_PORT}/one-list/database/createplaylist`;
+const API_CREATEPLAYLISTURL = `${VARIABLES.API_HOST}:${VARIABLES.API_PORT+VARIABLES.BASENAME}/database/createplaylist`;
 const PLAYLISTURL = (`${VARIABLES.APP_URL+VARIABLES.BASENAME}/playlist`);
 
 const sidebarTextStyling2 = {
@@ -30,7 +31,6 @@ const SListButton = styled.button`
     left: ${props => props.sidebarShown ? '-100px' : '-14px'};
     top: 13.5vh;
 	z-index: 2;
-	transform: rotate(90deg);
 
 	display: inline-flex;
 	flex-direction: column;
@@ -43,15 +43,15 @@ const SListButton = styled.button`
 
 	outline: none;
 	border: none;
-	border-radius: 0px 40px 40px 0px;
 	border-radius: 90px 90px 0px 0px;
 
 	box-shadow: 4px 3px 10px 1px #111c22;
     cursor: pointer; 
+	transform: rotate(90deg);
     transition: 0.3s left ease-in-out;
 
 	&:active {
-		transform: scale(0.96); 
+		transform: rotate(90deg) scale(0.96); 
         /* Scaling button to 0.98 to its original size */ 
         box-shadow: 3px 2px 6px 1px #111c22;
 	}
@@ -90,7 +90,7 @@ const SPlaylist = styled.div`
 	margin-top: 2px; /* - line height of NavBar */
 	//border: 2px solid black;
 
-	border-radius: 8px;//30px;
+	border-radius: 0 16px 16px 0;
  	background-color: ${props => props.isLoading ? 'rgba(var(--silvercolor2))' : 'rgba(var(--silvercolor2), 0.6)'}; 
  	//background-color: rgba(255,255,255, 0.5);
  	color: white;

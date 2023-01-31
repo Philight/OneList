@@ -102,6 +102,8 @@ const SItemPlaceholder = styled.li`
     font-size: 30px;
     border-radius: 50%;
     border: 3.4px solid rgba(var(--silvercolor2), 1);
+    border: 3.4px solid rgb(var(--2-blueBright3));
+
 `
 
 const SItem = styled(SItemPlaceholder)`
