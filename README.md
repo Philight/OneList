@@ -1,11 +1,14 @@
 # one.list
+- Web SPA
+- Search for any track/album or playlist on various music platforms
+- Create playlists and share
+### ☄️ LIVE 🌎 https://philight.github.io/one-list/
+##### <br />
 
-## LIVE @ https://philight.github.io/one-list/
-
-## DEMO
+## 📺 DEMO
 ![Preview](src/assets/preview.gif)
 
-## BUILT WITH
+## 🧰 BUILT WITH
 - React.js (React Router, Hooks, Refs)
 - Context State Management
 - Styled Components
@@ -23,7 +26,7 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 
-## Available Scripts
+## ⚙️ AVAILABLE SCRIPTS
 
 In the project directory, you can run:
 
